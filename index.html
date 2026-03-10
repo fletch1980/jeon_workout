@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Jéon's Muscle Builder</title>
+<title>Jéon's Fitness Suite</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:#0a0010;font-family:system-ui,sans-serif;min-height:100vh;padding:20px 16px 60px}
+body{background:#0a0010;font-family:system-ui,sans-serif;min-height:100vh;padding:20px 16px 40px}
 .header{text-align:center;padding:24px 0 18px}
 .header h1{font-size:26px;font-weight:900;color:white}
 .header p{font-size:13px;color:#9ca3af;margin-top:4px}
@@ -18,617 +18,340 @@ body{background:#0a0010;font-family:system-ui,sans-serif;min-height:100vh;paddin
 .today-item{background:rgba(255,255,255,.15);border-radius:8px;padding:8px 12px;font-size:13px;display:flex;align-items:center;gap:8px}
 .today-item span{font-weight:600}
 .rest-day{text-align:center;font-size:16px;padding:10px 0 4px;opacity:.85}
-.phase-snap{background:#1a0030;border-radius:14px;padding:14px 16px;margin-bottom:16px;border:1px solid #7c3aed33}
-.phase-snap-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
-.phase-snap-title{color:#c084fc;font-size:13px;font-weight:800;letter-spacing:1px;text-transform:uppercase}
-.phase-pill{background:#7c3aed22;border:1.5px solid #7c3aed;border-radius:20px;padding:5px 14px;font-size:13px;font-weight:800;color:#c084fc}
-.phase-btn-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
-.phase-sel-btn{flex:1;min-width:80px;background:#0d0d1a;border:1.5px solid #7c3aed44;border-radius:10px;color:#9ca3af;font-size:11px;font-weight:700;padding:8px 4px;cursor:pointer;text-align:center}
-.phase-sel-btn.active{background:linear-gradient(135deg,#7c3aed,#db2777);border-color:transparent;color:white}
+.streak-row{display:flex;gap:10px;margin-bottom:24px}
+.streak-card{flex:1;background:#1a0030;border-radius:14px;padding:14px;text-align:center}
+.streak-val{font-size:2rem;font-weight:900;color:#f0abfc}
+.streak-lbl{font-size:11px;color:#9ca3af;margin-top:2px;text-transform:uppercase;letter-spacing:1px}
+.streak-card.fire .streak-val{color:#fb923c}
+.cal-box{background:#1a0030;border-radius:16px;padding:16px 20px;margin-bottom:16px}
+.cal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.cal-title{color:white;font-size:15px;font-weight:800}
+.cal-nav{background:#7c3aed33;border:1px solid #7c3aed66;color:#c084fc;border-radius:8px;padding:4px 10px;font-size:13px;cursor:pointer}
+.cal-days-header{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:6px}
+.cal-days-header span{text-align:center;font-size:10px;color:#6b7280;font-weight:700}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.cal-day{aspect-ratio:1;border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#6b7280;background:#0d0d1a;cursor:pointer;transition:opacity .15s}
+.cal-day:active{opacity:.7}
+.cal-day:hover{border:1px solid #7c3aed55;color:#c084fc}
+.cal-day.today{border:1.5px solid #7c3aed;color:white}
+.cal-day.empty{background:transparent;cursor:default;pointer-events:none}
+.cal-day.empty:hover{border:none}
+.cal-day.future{opacity:.3;cursor:default;pointer-events:none}
+.cal-day.worked{color:white}
+.cal-day .dot-row{display:flex;gap:2px;margin-top:2px;flex-wrap:wrap;justify-content:center}
+.dot{width:5px;height:5px;border-radius:50%}
+.dot-push{background:#f97316}
+.dot-pull{background:#38bdf8}
+.dot-legs{background:#10b981}
+.dot-core{background:#a855f7}
+.dot-full{background:#ef4444}
+.dot-tracker{background:#f0abfc}
+.legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.leg-item{display:flex;align-items:center;gap:4px;font-size:11px;color:#9ca3af}
+.leg-dot{width:8px;height:8px;border-radius:50%}
+.log-workout-btn{width:100%;background:linear-gradient(135deg,#7c3aed,#db2777);border:none;border-radius:12px;color:white;font-size:14px;font-weight:800;padding:14px;cursor:pointer;margin-bottom:24px;letter-spacing:.5px}
+.snapshot-box{background:#1a0030;border-radius:16px;padding:16px 20px;margin-bottom:24px}
+.snapshot-box h3{color:white;font-size:13px;font-weight:800;margin-bottom:12px;letter-spacing:1px;text-transform:uppercase}
+.snap-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px}
+.snap-item{background:#0d0d1a;border-radius:10px;padding:8px;text-align:center}
+.snap-val{font-size:1.2rem;font-weight:900;color:#c084fc}
+.snap-lbl{font-size:10px;color:#6b7280;margin-top:2px}
+.snap-bar-wrap{background:#0d0d1a;border-radius:20px;height:6px;overflow:hidden}
+.snap-bar{height:100%;border-radius:20px;background:linear-gradient(90deg,#7c3aed,#db2777);transition:width .4s}
+.snap-note{font-size:10px;color:#6b7280;text-align:right;margin-top:4px}
+.phase-box{background:#1a0030;border-radius:16px;padding:16px 20px;margin-bottom:24px;border:1px solid #7c3aed33}
+.phase-box h3{color:#c084fc;font-size:13px;font-weight:800;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
+.phase-pill{display:inline-block;background:linear-gradient(135deg,#7c3aed,#db2777);border-radius:20px;padding:5px 16px;font-size:13px;font-weight:800;color:white;margin-bottom:6px}
+.phase-desc{font-size:12px;color:#9ca3af}
 .section-label{font-size:11px;font-weight:700;color:#6b7280;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:12px}
-/* DAY CARDS */
-.day-cards{display:flex;flex-direction:column;gap:12px;margin-bottom:28px}
-.day-card{border-radius:16px;padding:18px 20px;color:white;cursor:pointer;position:relative;transition:transform .15s,opacity .15s}
-.day-card:active{transform:scale(.97);opacity:.9}
-.dc-mon{background:linear-gradient(135deg,#7c3aed,#9333ea)}
-.dc-tue{background:linear-gradient(135deg,#0369a1,#38bdf8)}
-.dc-wed{background:linear-gradient(135deg,#065f46,#10b981)}
-.dc-thu{background:linear-gradient(135deg,#7c2d12,#f97316)}
-.dc-fri{background:linear-gradient(135deg,#9f1239,#ef4444)}
-.dc-icon{font-size:26px;margin-bottom:6px}
-.dc-title{font-size:17px;font-weight:800}
-.dc-sub{font-size:12px;opacity:.85;margin-top:2px}
-.dc-badge{position:absolute;top:14px;right:14px;background:rgba(255,255,255,.25);border-radius:20px;padding:4px 10px;font-size:11px;font-weight:700}
-.dc-badge.today{background:white;color:#7c3aed}
-/* WORKOUT VIEW */
-.workout-view{display:none}
-.workout-view.active{display:block}
-.back-btn{display:flex;align-items:center;gap:6px;background:#1a0030;border:1px solid #7c3aed44;border-radius:20px;color:#c084fc;font-size:13px;font-weight:700;padding:8px 16px;cursor:pointer;margin-bottom:16px;width:fit-content}
-.day-header{color:#c084fc;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:12px}
-/* EXERCISE CARDS */
-.ex-card{background:#1a0030;border-radius:14px;margin-bottom:10px;overflow:hidden;border:1px solid #7c3aed22}
-.ex-header{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;cursor:pointer;user-select:none}
-.ex-name{font-size:14px;font-weight:800;color:white}
-.ex-meta{font-size:11px;color:#9ca3af;margin-top:2px}
-.ex-chevron{color:#7c3aed;font-size:13px}
-.ex-body{display:none;border-top:1px solid #7c3aed22;padding:12px 14px}
-.how-to{background:#0d0d1a;border-radius:10px;padding:10px 12px;margin-bottom:8px}
-.how-to-title{font-size:11px;font-weight:800;color:#db2777;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
-.how-to ol{padding-left:16px}
-.how-to li{font-size:12px;color:#d8b4fe;line-height:1.6;margin-bottom:3px}
-.band-tip{background:#7c3aed18;border:1px solid #7c3aed44;border-radius:8px;padding:8px 10px;margin-bottom:8px;font-size:12px;color:#c084fc;line-height:1.5}
-.band-tip-title{font-size:10px;font-weight:800;color:#a855f7;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px}
-.log-section-title{font-size:11px;font-weight:800;color:#9ca3af;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
-.set-row{display:flex;gap:8px;align-items:center;margin-bottom:6px}
-.set-lbl{font-size:12px;color:#6b7280;width:38px;flex-shrink:0}
-.set-row input{flex:1;background:#0d0d1a;border:1px solid #7c3aed44;border-radius:8px;color:white;padding:6px 10px;font-size:13px;outline:none}
-.set-row input::placeholder{color:#4b5563}
-.log-ex-btn{width:100%;margin-top:8px;background:linear-gradient(135deg,#7c3aed,#db2777);border:none;border-radius:10px;color:white;font-size:13px;font-weight:700;padding:10px;cursor:pointer}
-/* HISTORY */
-.history-entry{background:#1a0030;border-radius:14px;padding:12px 14px;margin-bottom:10px;border:1px solid #7c3aed22;position:relative}
-.h-date{font-size:11px;color:#9ca3af;margin-bottom:2px}
-.h-day{font-size:13px;font-weight:800;color:#c084fc;margin-bottom:6px}
-.h-ex{font-size:12px;color:#d8b4fe;line-height:1.7}
-.h-del{position:absolute;top:10px;right:12px;background:#1a0010;border:1px solid #ef444455;color:#ef4444;border-radius:6px;font-size:11px;font-weight:700;padding:4px 10px;cursor:pointer}
-.empty-msg{text-align:center;color:#6b7280;font-size:13px;padding:30px 0}
-/* TIPS */
 .tips-row{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;margin-bottom:10px;scrollbar-width:none}
 .tips-row::-webkit-scrollbar{display:none}
 .tip-chip{flex-shrink:0;background:#1a0030;border:1px solid #7c3aed55;border-radius:20px;padding:7px 13px;font-size:12px;color:#d8b4fe;white-space:nowrap;cursor:pointer}
 .tip-chip.active{background:linear-gradient(135deg,#7c3aed,#db2777);border-color:transparent;color:white;font-weight:700}
 .tip-detail{background:#1a0030;border-radius:12px;padding:12px 14px;margin-bottom:24px;font-size:13px;color:#d8b4fe;line-height:1.6}
 .tip-detail strong{color:#f0abfc}
-/* MODALS */
+.cards{display:flex;flex-direction:column;gap:14px;margin-bottom:28px}
+a.card{display:block;text-decoration:none;border-radius:16px;padding:18px 20px;color:white;position:relative;overflow:hidden;transition:transform .15s,opacity .15s}
+a.card:active{transform:scale(.97);opacity:.9}
+.card-workout{background:linear-gradient(135deg,#6d28d9,#db2777)}
+.card-tracker{background:linear-gradient(135deg,#065f46,#10b981)}
+.card-icon{font-size:28px;margin-bottom:6px}
+.card-title{font-size:18px;font-weight:800}
+.card-sub{font-size:12px;opacity:.85;margin-top:2px}
+.card-badge{position:absolute;top:14px;right:14px;background:rgba(255,255,255,.25);border-radius:20px;padding:4px 10px;font-size:11px;font-weight:700}
+.card-badge.today-badge{background:white;color:#7c3aed}
+/* LOG MODAL */
 .modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:50;align-items:flex-end;justify-content:center}
 .modal-bg.open{display:flex}
 .modal{background:#1a0030;border-radius:20px 20px 0 0;padding:24px 20px 36px;width:100%;max-width:480px}
 .modal h3{color:white;font-size:17px;font-weight:800;margin-bottom:16px}
 .modal-label{font-size:12px;color:#d8b4fe;margin-bottom:8px;display:block}
-.modal-btns{display:flex;gap:10px;margin-top:16px}
+.app-check-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:18px}
+.app-check{background:#0d0d1a;border:1.5px solid #7c3aed44;border-radius:10px;padding:10px;display:flex;align-items:center;gap:8px;cursor:pointer;transition:all .2s}
+.app-check.checked{border-color:#c084fc;background:#7c3aed22}
+.ac-icon{font-size:1.2rem}
+.ac-name{font-size:12px;color:#d8b4fe;font-weight:600}
+.modal-btns{display:flex;gap:10px}
 .modal-save{flex:1;background:linear-gradient(135deg,#7c3aed,#db2777);border:none;border-radius:10px;color:white;font-size:14px;font-weight:700;padding:12px;cursor:pointer}
 .modal-cancel{background:#0d0d1a;border:1px solid #7c3aed44;border-radius:10px;color:#9ca3af;font-size:14px;padding:12px 18px;cursor:pointer}
 .modal-delete{background:#1a0010;border:1px solid #ef4444;border-radius:10px;color:#ef4444;font-size:14px;font-weight:700;padding:12px 18px;cursor:pointer}
+.day-app-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #7c3aed22}
+.day-app-row:last-child{border-bottom:none}
+.day-app-name{font-size:13px;color:#d8b4fe;display:flex;align-items:center;gap:8px}
+.remove-btn{background:#1a0010;border:1px solid #ef444455;color:#ef4444;border-radius:6px;font-size:11px;font-weight:700;padding:4px 10px;cursor:pointer}
 .past-date-label{font-size:12px;color:#9ca3af;margin-bottom:14px;text-align:center;font-style:italic}
 </style>
 </head>
 <body>
 
 <div class="header">
-  <h1>💪 Jéon's Muscle Builder</h1>
-  <p>Dumbbells + Bands · 5 Days · 12 Weeks</p>
+  <h1>💪 Jéon's Fitness Suite</h1>
+  <p>Your muscle-building toolkit</p>
 </div>
 
 <div class="today-banner" id="todayBanner"></div>
 
-<div class="phase-snap">
-  <div class="phase-snap-header">
-    <div class="phase-snap-title">📈 Program Phase</div>
-    <div class="phase-pill" id="phasePill">Phase 1</div>
+<div class="streak-row">
+  <div class="streak-card fire"><div class="streak-val" id="streakVal">0</div><div class="streak-lbl">🔥 Streak</div></div>
+  <div class="streak-card"><div class="streak-val" id="totalVal">0</div><div class="streak-lbl">💪 Total</div></div>
+  <div class="streak-card"><div class="streak-val" id="monthVal">0</div><div class="streak-lbl">📅 Month</div></div>
+</div>
+
+<div class="cal-box">
+  <div class="cal-header">
+    <button class="cal-nav" onclick="changeMonth(-1)">◀</button>
+    <div class="cal-title" id="calTitle"></div>
+    <button class="cal-nav" onclick="changeMonth(1)">▶</button>
   </div>
-  <div style="font-size:12px;color:#9ca3af;margin-bottom:10px" id="phaseDesc">Weeks 1–4 · Learn the movements. Moderate weight.</div>
-  <div class="phase-btn-row">
-    <button class="phase-sel-btn active" id="pbtn1" onclick="setPhase(1)">Phase 1<br><span style="font-weight:400;color:#9ca3af">Wk 1–4</span></button>
-    <button class="phase-sel-btn" id="pbtn2" onclick="setPhase(2)">Phase 2<br><span style="font-weight:400;color:#9ca3af">Wk 5–8</span></button>
-    <button class="phase-sel-btn" id="pbtn3" onclick="setPhase(3)">Phase 3<br><span style="font-weight:400;color:#9ca3af">Wk 9–12</span></button>
+  <div class="cal-days-header"><span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span></div>
+  <div class="cal-grid" id="calGrid"></div>
+  <div class="legend">
+    <div class="leg-item"><div class="leg-dot dot-push"></div>Push</div>
+    <div class="leg-item"><div class="leg-dot dot-pull"></div>Pull</div>
+    <div class="leg-item"><div class="leg-dot dot-legs"></div>Legs</div>
+    <div class="leg-item"><div class="leg-dot dot-core"></div>Core</div>
+    <div class="leg-item"><div class="leg-dot dot-full"></div>Full Body</div>
+    <div class="leg-item"><div class="leg-dot dot-tracker"></div>Tracker</div>
   </div>
 </div>
 
-<!-- HOME VIEW -->
-<div id="homeView">
-  <p class="section-label">📅 This Week's Workouts</p>
-  <div class="day-cards">
-    <div class="day-card dc-mon" id="card-mon" onclick="openDay('mon')">
-      <div class="dc-icon">🏋️</div>
-      <div class="dc-title">Monday — Push</div>
-      <div class="dc-sub">Chest · Shoulders · Triceps · 6 exercises</div>
+<button class="log-workout-btn" onclick="openModal(today())">✅ Log Today's Workout</button>
+
+<div class="snapshot-box">
+  <h3>📊 Today's Snapshot</h3>
+  <div class="snap-grid">
+    <div class="snap-item"><div class="snap-val" id="snapProtein">—</div><div class="snap-lbl">Protein (g)</div></div>
+    <div class="snap-item"><div class="snap-val" id="snapSleep">—</div><div class="snap-lbl">Sleep (hrs)</div></div>
+    <div class="snap-item"><div class="snap-val" id="snapFeel">—</div><div class="snap-lbl">Body Feel</div></div>
+  </div>
+  <div class="snap-bar-wrap"><div class="snap-bar" id="snapBar" style="width:0%"></div></div>
+  <div class="snap-note" id="snapNote">Log in Tracker to fill this in</div>
+</div>
+
+<div class="phase-box">
+  <h3>📈 Current Phase</h3>
+  <div class="phase-pill" id="phasePill">Phase 1</div>
+  <div class="phase-desc" id="phaseDesc">Weeks 1–4 · Learn the movements. Moderate weight.</div>
+</div>
+
+<p class="section-label">💡 Quick Tips</p>
+<div class="tips-row">
+  <div class="tip-chip active" onclick="showTip(0)">🥩 Protein</div>
+  <div class="tip-chip" onclick="showTip(1)">💪 Form</div>
+  <div class="tip-chip" onclick="showTip(2)">😴 Recovery</div>
+  <div class="tip-chip" onclick="showTip(3)">📈 Overload</div>
+  <div class="tip-chip" onclick="showTip(4)">🔥 Getting Cut</div>
+</div>
+<div class="tip-detail" id="tipDetail"></div>
+
+<p class="section-label">Your Apps</p>
+<div class="cards">
+  <a href="https://fletch1980.github.io/jeon_muscle/" class="card card-workout" target="_blank" id="card-workout">
+    <div class="card-icon">🏋️</div>
+    <div class="card-title">Muscle Builder</div>
+    <div class="card-sub">5-Day Program · Push · Pull · Legs · Core · Full Body</div>
+  </a>
+  <a href="https://fletch1980.github.io/jeon_tracker/" class="card card-tracker" target="_blank">
+    <div class="card-icon">📊</div>
+    <div class="card-title">Fitness Tracker</div>
+    <div class="card-sub">Protein · Overload · Recovery · Weight Log</div>
+  </a>
+</div>
+
+<!-- LOG MODAL -->
+<div class="modal-bg" id="modalBg">
+  <div class="modal">
+    <h3 id="modalTitle">✅ Log Today's Workout</h3>
+    <div id="modalDateLabel" class="past-date-label" style="display:none"></div>
+    <span class="modal-label" id="modalSubLabel">Tap everything you completed</span>
+    <div class="app-check-grid">
+      <div class="app-check" id="chk-push" onclick="toggleCheck('push')"><span class="ac-icon">🏋️</span><span class="ac-name">Push Day</span></div>
+      <div class="app-check" id="chk-pull" onclick="toggleCheck('pull')"><span class="ac-icon">💪</span><span class="ac-name">Pull Day</span></div>
+      <div class="app-check" id="chk-legs" onclick="toggleCheck('legs')"><span class="ac-icon">🦵</span><span class="ac-name">Legs + Glutes</span></div>
+      <div class="app-check" id="chk-core" onclick="toggleCheck('core')"><span class="ac-icon">🔥</span><span class="ac-name">Core + Conditioning</span></div>
+      <div class="app-check" id="chk-full" onclick="toggleCheck('full')"><span class="ac-icon">⚡</span><span class="ac-name">Full Body Power</span></div>
+      <div class="app-check" id="chk-tracker" onclick="toggleCheck('tracker')"><span class="ac-icon">📊</span><span class="ac-name">Tracker</span></div>
     </div>
-    <div class="day-card dc-tue" id="card-tue" onclick="openDay('tue')">
-      <div class="dc-icon">💪</div>
-      <div class="dc-title">Tuesday — Pull</div>
-      <div class="dc-sub">Back · Biceps · 6 exercises</div>
-    </div>
-    <div class="day-card dc-wed" id="card-wed" onclick="openDay('wed')">
-      <div class="dc-icon">🦵</div>
-      <div class="dc-title">Wednesday — Legs</div>
-      <div class="dc-sub">Legs + Glutes · 6 exercises</div>
-    </div>
-    <div class="day-card dc-thu" id="card-thu" onclick="openDay('thu')">
-      <div class="dc-icon">🔥</div>
-      <div class="dc-title">Thursday — Core</div>
-      <div class="dc-sub">Core + Conditioning · 6 exercises</div>
-    </div>
-    <div class="day-card dc-fri" id="card-fri" onclick="openDay('fri')">
-      <div class="dc-icon">⚡</div>
-      <div class="dc-title">Friday — Full Body</div>
-      <div class="dc-sub">Full Body Power · 6 exercises</div>
+    <div class="modal-btns">
+      <button class="modal-cancel" onclick="closeModal()">Cancel</button>
+      <button class="modal-delete" id="modalDeleteBtn" onclick="deleteWorkout()" style="display:none">🗑 Delete</button>
+      <button class="modal-save" onclick="saveWorkout()">Save 💪</button>
     </div>
   </div>
+</div>
 
-  <p class="section-label">📋 History</p>
-  <div id="historyList"></div>
-
-  <p class="section-label" style="margin-top:8px">💡 Quick Tips</p>
-  <div class="tips-row">
-    <div class="tip-chip active" onclick="showTip(0)">🥩 Protein</div>
-    <div class="tip-chip" onclick="showTip(1)">💪 Form</div>
-    <div class="tip-chip" onclick="showTip(2)">😴 Recovery</div>
-    <div class="tip-chip" onclick="showTip(3)">📈 Overload</div>
-    <div class="tip-chip" onclick="showTip(4)">🔥 Getting Cut</div>
-    <div class="tip-chip" onclick="showTip(5)">🎽 Bands</div>
+<!-- DAY DETAIL MODAL -->
+<div class="modal-bg" id="dayModalBg">
+  <div class="modal">
+    <h3 id="dayModalTitle">📅 Day Log</h3>
+    <div id="dayModalContent"></div>
+    <div class="modal-btns" style="margin-top:16px">
+      <button class="modal-cancel" onclick="closeDayModal()">Close</button>
+      <button class="modal-save" onclick="editDayWorkout()">✏️ Edit</button>
+    </div>
   </div>
-  <div class="tip-detail" id="tipDetail"></div>
-</div>
-
-<!-- WORKOUT VIEWS -->
-<div class="workout-view" id="view-mon">
-  <button class="back-btn" onclick="closeDay()">◀ Back</button>
-  <div class="day-header">Monday — Push · Chest · Shoulders · Triceps</div>
-
-  <div class="ex-card"><div class="ex-header" onclick="togEx('m1')"><div><div class="ex-name">Dumbbell Floor Press</div><div class="ex-meta">4 sets · 8–10 reps</div></div><span class="ex-chevron">▾</span></div>
-    <div class="ex-body" id="m1">
-      <div class="how-to"><div class="how-to-title">How To Do It</div><ol><li>Lie on your back on the floor, a dumbbell in each hand at chest level, palms facing forward.</li><li>Press both dumbbells straight up until arms are fully extended.</li><li>Lower slowly until your upper arms touch the floor — pause briefly.</li><li>Keep feet flat and core tight. Push back up with control.</li></ol></div>
-      <div class="band-tip"><div class="band-tip-title">🎽 Band Option</div>Anchor a resistance band under your upper back, hold one end in each hand at chest level, and press upward the same way. The band adds more resistance at the top of the press where you're strongest.</div>
-      <div class="log-section-title">Log This Exercise</div>
-      <div class="set-row"><span class="set-lbl">Set 1</span><input id="m1r1" placeholder="Reps"/><input id="m1w1" placeholder="Weight / Band"/></div>
-      <div class="set-row"><span class="set-lbl">Set 2</span><input id="m1r2" placeholder="Reps"/><input id="m1w2" placeholder="Weight / Band"/></div>
-      <div class="set-row"><span class="set-lbl">Set 3</span><input id="m1r3" placeholder="Reps"/><input id="m1w3" placeholder="Weight / Band"/></div>
-      <div class="set-row"><span class="set-lbl">Set 4</span><input id="m1r4" placeholder="Reps"/><input id="m1w4" placeholder="Weight / Band"/></div>
-      <button class="log-ex-btn" onclick="logEx('mon','Floor Press',['m1r1','m1w1','m1r2','m1w2','m1r3','m1w3','m1r4','m1w4'])">Save Log ✓</button>
-    </div></div>
-
-  <div class="ex-card"><div class="ex-header" onclick="togEx('m2')"><div><div class="ex-name">Dumbbell Shoulder Press (Seated)</div><div class="ex-meta">3 sets · 10–12 reps</div></div><span class="ex-chevron">▾</span></div>
-    <div class="ex-body" id="m2">
-      <div class="how-to"><div class="how-to-title">How To Do It</div><ol><li>Sit upright on a chair, dumbbell in each hand at shoulder height, palms facing forward.</li><li>Press both dumbbells straight overhead until arms are fully extended.</li><li>Lower back to shoulder height with control. Don't arch your lower back.</li></ol></div>
-      <div class="band-tip"><div class="band-tip-title">🎽 Band Option</div>Sit on the middle of the band, hold one end in each hand at shoulder height, and press overhead the same way. Use a heavier band to match dumbbell resistance.</div>
-      <div class="log-section-title">Log This Exercise</div>
-      <div class="set-row"><span class="set-lbl">Set 1</span><input id="m2r1" placeholder="Reps"/><input id="m2w1" placeholder="Weight / Band"/></div>
-      <div class="set-row"><span class="set-lbl">Set 2</span><input id="m2r2" placeholder="Reps"/><input id="m2w2" placeholder="Weight / Band"/></div>
-      <div class="set-row"><span class="set-lbl">Set 3</span><input id="m2r3" placeholder="Reps"/><input id="m2w3" placeholder="Weight / Band"/></div>
-      <button class="log-ex-btn" onclick="logEx('mon','Shoulder Press',['m2r1','m2w1','m2r2','m2w2','m2r3','m2w3'])">Save Log ✓</button>
-    </div></div>
-
-  <div class="ex-card"><div class="ex-header" onclick="togEx('m3')"><div><div class="ex-name">Dumbbell Lateral Raise</div><div class="ex-meta">3 sets · 12–15 reps</div></div><span class="ex-chevron">▾</span></div>
-    <div class="ex-body" id="m3">
-      <div class="how-to"><div class="how-to-title">How To Do It</div><ol><li>Stand tall, dumbbells at your sides, slight bend in elbows.</li><li>Raise both arms out to the sides until they reach shoulder height.</li><li>Pause one second at the top — don't shrug your shoulders.</li><li>Lower slowly back to your sides.</li></ol></div>
-      <div class="band-tip"><div class="band-tip-title">🎽 Band Option</div>Stand on the middle of the band, hold one end in each hand, and raise your arms to the sides exactly as you would with dumbbells. Bands provide great constant tension through the whole range here.</div>
-      <div class="log-section-title">Log This Exercise</div>
-      <div class="set-row"><span class="set-lbl">Set 1</span><input id="m3r1" placeholder="Reps"/><input id="m3w1" placeholder="Weight / Band"/></div>
-      <div class="set-row"><span class="set-lbl">Set 2</span><input id="m3r2" placeholder="Reps"/><input id="m3w2" placeholder="Weight / Band"/></div>
-      <div class="set-row"><span class="set-lbl">Set 3</span><input id="m3r3" placeholder="Reps"/><input id="m3w3" placeholder="Weight / Band"/></div>
-      <button class="log-ex-btn" onclick="logEx('mon','Lateral Raise',['m3r1','m3w1','m3r2','m3w2','m3r3','m3w3'])">Save Log ✓</button>
-    </div></div>
-
-  <div class="ex-card"><div class="ex-header" onclick="togEx('m4')"><div><div class="ex-name">Dumbbell Chest Fly (Floor)</div><div class="ex-meta">3 sets · 12 reps</div></div><span class="ex-chevron">▾</span></div>
-    <div class="ex-body" id="m4">
-      <div class="how-to"><div class="how-to-title">How To Do It</div><ol><li>Lie on your back, dumbbells directly above your chest, palms facing each other.</li><li>With a slight bend in your elbows, lower both arms out to the sides until your upper arms touch the floor.</li><li>Squeeze your chest and bring the dumbbells back together. Think of hugging a big tree.</li></ol></div>
-      <div class="band-tip"><div class="band-tip-title">🎽 Band Option</div>Anchor the band under your upper back, hold one end in each hand, and perform the fly with the same arc motion. Keep the slight bend in your elbows throughout.</div>
-      <div class="log-section-title">Log This Exercise</div>
-      <div class="set-row"><span class="set-lbl">Set 1</span><input id="m4r1" placeholder="Reps"/><input id="m4w1" placeholder="Weight / Band"/></div>
-      <div class="set-row"><span class="set-lbl">Set 2</span><input id="m4r2" placeholder="Reps"/><input id="m4w2" placeholder="Weight / Band"/></div>
-      <div class="set-row"><span class="set-lbl">Set 3</span><input id="m4r3" placeholder="Reps"/><input id="m4w3" placeholder="Weight / Band"/></div>
-      <button class="log-ex-btn" onclick="logEx('mon','Chest Fly',['m4r1','m4w1','m4r2','m4w2','m4r3','m4w3'])">Save Log ✓</button>
-    </div></div>
-
-  <div class="ex-card"><div class="ex-header" onclick="togEx('m5')"><div><div class="ex-name">Tricep Overhead Extension</div><div class="ex-meta">3 sets · 12–15 reps</div></div><span class="ex-chevron">▾</span></div>
-    <div class="ex-body" id="m5">
-      <div class="how-to"><div class="how-to-title">How To Do It</div><ol><li>Hold one dumbbell with both hands above your head, arms fully extended.</li><li>Keep elbows pointing forward and close to your head — don't let them flare out.</li><li>Slowly lower the dumbbell behind your head by bending at the elbows.</li><li>Press back up. Only your forearms should move.</li></ol></div>
-      <div class="band-tip"><div class="band-tip-title">🎽 Band Option</div>Step on one end of the band, hold the other end behind your head with both hands, and extend upward the same way. Keep elbows pointed forward and don't let them flare.</div>
-      <div class="log-section-title">Log This Exercise</div>
-      <div class="set-row"><span class="set-lbl">Set 1</span><input id="m5r1" placeholder="Reps"/><input id="m5w1" placeholder="Weight / Band"/></div>
-      <div class="set-row"><span class="set-lbl">Set 2</span><input id="m5r2" placeholder="Reps"/><input id="m5w2" placeholder="Weight / Band"/></div>
-      <div class="set-row"><span class="set-lbl">Set 3</span><input id="m5r3" placeholder="Reps"/><input id="m5w3" placeholder="Weight / Band"/></div>
-      <button class="log-ex-btn" onclick="logEx('mon','Tricep Extension',['m5r1','m5w1','m5r2','m5w2','m5r3','m5w3'])">Save Log ✓</button>
-    </div></div>
-
-  <div class="ex-card"><div class="ex-header" onclick="togEx('m6')"><div><div class="ex-name">Diamond Push-Ups</div><div class="ex-meta">2 sets · Max reps</div></div><span class="ex-chevron">▾</span></div>
-    <div class="ex-body" id="m6">
-      <div class="how-to"><div class="how-to-title">How To Do It</div><ol><li>Get into a push-up position. Place hands together under your chest — thumbs and index fingers touching to form a diamond shape.</li><li>Lower your chest toward your hands, keeping elbows close to your body.</li><li>Push back up. Keep your body in a straight line. Stop when your form breaks.</li></ol></div>
-      <div class="band-tip"><div class="band-tip-title">🎽 Band Option</div>Drape a resistance band across your upper back and hold one end under each palm as you do the diamond push-up. The band adds extra resistance at the top — great for overload without equipment.</div>
-      <div class="log-section-title">Log This Exercise</div>
-      <div class="set-row"><span class="set-lbl">Set 1</span><input id="m6r1" placeholder="Reps"/><input id="m6w1" placeholder="BW / Band"/></div>
-      <div class="set-row"><span class="set-lbl">Set 2</span><input id="m6r2" placeholder="Reps"/><input id="m6w2" placeholder="BW / Band"/></div>
-      <button class="log-ex-btn" onclick="logEx('mon','Diamond Push-Ups',['m6r1','m6w1','m6r2','m6w2'])">Save Log ✓</button>
-    </div></div>
-</div>
-
-<!-- TUESDAY -->
-<div class="workout-view" id="view-tue">
-  <button class="back-btn" onclick="closeDay()">◀ Back</button>
-  <div class="day-header">Tuesday — Pull · Back · Biceps</div>
-
-  <div class="ex-card"><div class="ex-header" onclick="togEx('t1')"><div><div class="ex-name">Dumbbell Bent-Over Row</div><div class="ex-meta">4 sets · 8–10 reps</div></div><span class="ex-chevron">▾</span></div>
-    <div class="ex-body" id="t1">
-      <div class="how-to"><div class="how-to-title">How To Do It</div><ol><li>Stand feet hip-width apart, a dumbbell in each hand.</li><li>Hinge at the hips until your torso is roughly parallel to the floor. Keep your back flat.</li><li>Pull both dumbbells up toward your lower ribs, squeezing your shoulder blades together.</li><li>Lower with control. That's one rep.</li></ol></div>
-      <div class="band-tip"><div class="band-tip-title">🎽 Band Option</div>Stand on the middle of the band, hinge forward, and row both ends up toward your ribs the same way. Keep your back flat — the band position makes it easy to cheat, so stay strict.</div>
-      <div class="log-section-title">Log This Exercise</div>
-      <div class="set-row"><span class="set-lbl">Set 1</span><input id="t1r1" placeholder="Reps"/><input id="t1w1" placeholder="Weight / Band"/></div>
-      <div class="set-row"><span class="set-lbl">Set 2</span><input id="t1r2" placeholder="Reps"/><input id="t1w2" placeholder="Weight / Band"/></div>
-      <div class="set-row"><span class="set-lbl">Set 3</span><input id="t1r3" placeholder="Reps"/><input id="t1w3" placeholder="Weight / Band"/></div>
-      <div class="set-row"><span class="set-lbl">Set 4</span><input id="t1r4" placeholder="Reps"/><input id="t1w4" placeholder="Weight / Band"/></div>
-      <button class="log-ex-btn" onclick="logEx('tue','Bent-Over Row',['t1r1','t1w1','t1r2','t1w2','t1r3','t1w3','t1r4','t1w4'])">Save Log ✓</button>
-    </div></div>
-
-  <div class="ex-card"><div class="ex-header" onclick="togEx('t2')"><div><div class="ex-name">Single-Arm Dumbbell Row</div><div class="ex-meta">3 sets · 10–12 reps each side</div></div><span class="ex-chevron">▾</span></div>
-    <div class="ex-body" id="t2">
-      <div class="how-to"><div class="how-to-title">How To Do It</div><ol><li>Place your left knee and left hand on a chair for support, right foot on the floor.</li><li>Hold a dumbbell in your right hand, arm hanging straight down.</li><li>Pull the dumbbell up toward your hip, elbow close to your side.</li><li>Lower with control. Complete all reps, then switch sides.</li></ol></div>
-      <div class="band-tip"><div class="band-tip-title">🎽 Band Option</div>Anchor the band low (under a door or heavy furniture), hinge forward in the same supported stance, and row one end up to your hip. Great for when you want lighter resistance or higher reps.</div>
-      <div class="log-section-title">Log This Exercise</div>
-      <div class="set-row"><span class="set-lbl">Set 1</span><input id="t2r1" placeholder="Reps"/><input id="t2w1" placeholder="Weight / Band"/></div>
-      <div class="set-row"><span class="set-lbl">Set 2</span><input id="t2r2" placeholder="Reps"/><input id="t2w2" placeholder="Weight / Band"/></div>
-      <div class="set-row"><span class="set-lbl">Set 3</span><input id="t2r3" placeholder="Reps"/><input id="t2w3" placeholder="Weight / Band"/></div>
-      <button class="log-ex-btn" onclick="logEx('tue','Single-Arm Row',['t2r1','t2w1','t2r2','t2w2','t2r3','t2w3'])">Save Log ✓</button>
-    </div></div>
-
-  <div class="ex-card"><div class="ex-header" onclick="togEx('t3')"><div><div class="ex-name">Dumbbell Rear Delt Fly</div><div class="ex-meta">3 sets · 12–15 reps</div></div><span class="ex-chevron">▾</span></div>
-    <div class="ex-body" id="t3">
-      <div class="how-to"><div class="how-to-title">How To Do It</div><ol><li>Hinge forward at the hips so your torso is almost parallel to the floor, dumbbells hanging below, palms facing each other.</li><li>With a slight bend in your elbows, raise both arms out to the sides until shoulder height.</li><li>Squeeze the back of your shoulders at the top, then lower slowly. Light weight, full control.</li></ol></div>
-      <div class="band-tip"><div class="band-tip-title">🎽 Band Option</div>Hold the band in both hands in front of you, hinge forward, and pull both ends apart horizontally until your arms are wide. This is a band pull-apart in the hinged position — excellent rear delt burner.</div>
-      <div class="log-section-title">Log This Exercise</div>
-      <div class="set-row"><span class="set-lbl">Set 1</span><input id="t3r1" placeholder="Reps"/><input id="t3w1" placeholder="Weight / Band"/></div>
-      <div class="set-row"><span class="set-lbl">Set 2</span><input id="t3r2" placeholder="Reps"/><input id="t3w2" placeholder="Weight / Band"/></div>
-      <div class="set-row"><span class="set-lbl">Set 3</span><input id="t3r3" placeholder="Reps"/><input id="t3w3" placeholder="Weight / Band"/></div>
-      <button class="log-ex-btn" onclick="logEx('tue','Rear Delt Fly',['t3r1','t3w1','t3r2','t3w2','t3r3','t3w3'])">Save Log ✓</button>
-    </div></div>
-
-  <div class="ex-card"><div class="ex-header" onclick="togEx('t4')"><div><div class="ex-name">Dumbbell Bicep Curl</div><div class="ex-meta">3 sets · 10–12 reps</div></div><span class="ex-chevron">▾</span></div>
-    <div class="ex-body" id="t4">
-      <div class="how-to"><div class="how-to-title">How To Do It</div><ol><li>Stand tall, dumbbells at your sides, palms facing forward.</li><li>Curl both dumbbells up toward your shoulders by bending your elbows.</li><li>Keep your elbows locked at your sides — don't swing your body.</li><li>Lower slowly back to the start. Full range of motion every rep.</li></ol></div>
-      <div class="band-tip"><div class="band-tip-title">🎽 Band Option</div>Stand on the middle of the band, hold one end in each hand, palms forward, and curl up the same way. Bands keep tension on the bicep even at the bottom of the curl, which dumbbells don't.</div>
-      <div class="log-section-title">Log This Exercise</div>
-      <div class="set-row"><span class="set-lbl">Set 1</span><input id="t4r1" placeholder="Reps"/><input id="t4w1" placeholder="Weight / Band"/></div>
-      <div class="set-row"><span class="set-lbl">Set 2</span><input id="t4r2" placeholder="Reps"/><input id="t4w2" placeholder="Weight / Band"/></div>
-      <div class="set-row"><span class="set-lbl">Set 3</span><input id="t4r3" placeholder="Reps"/><input id="t4w3" placeholder="Weight / Band"/></div>
-      <button class="log-ex-btn" onclick="logEx('tue','Bicep Curl',['t4r1','t4w1','t4r2','t4w2','t4r3','t4w3'])">Save Log ✓</button>
-    </div></div>
-
-  <div class="ex-card"><div class="ex-header" onclick="togEx('t5')"><div><div class="ex-name">Hammer Curl</div><div class="ex-meta">3 sets · 10–12 reps</div></div><span class="ex-chevron">▾</span></div>
-    <div class="ex-body" id="t5">
-      <div class="how-to"><div class="how-to-title">How To Do It</div><ol><li>Same starting position as a bicep curl, but your palms face each other throughout (like holding a hammer).</li><li>Curl both dumbbells up to shoulder height, keeping the neutral grip.</li><li>Lower with control. Targets the outer bicep and forearm more than standard curls.</li></ol></div>
-      <div class="band-tip"><div class="band-tip-title">🎽 Band Option</div>Stand on the band and hold both ends with palms facing each other (neutral grip). Curl up the same way. You can also do these one arm at a time for better control.</div>
-      <div class="log-section-title">Log This Exercise</div>
-      <div class="set-row"><span class="set-lbl">Set 1</span><input id="t5r1" placeholder="Reps"/><input id="t5w1" placeholder="Weight / Band"/></div>
-      <div class="set-row"><span class="set-lbl">Set 2</span><input id="t5r2" placeholder="Reps"/><input id="t5w2" placeholder="Weight / Band"/></div>
-      <div class="set-row"><span class="set-lbl">Set 3</span><input id="t5r3" placeholder="Reps"/><input id="t5w3" placeholder="Weight / Band"/></div>
-      <button class="log-ex-btn" onclick="logEx('tue','Hammer Curl',['t5r1','t5w1','t5r2','t5w2','t5r3','t5w3'])">Save Log ✓</button>
-    </div></div>
-
-  <div class="ex-card"><div class="ex-header" onclick="togEx('t6')"><div><div class="ex-name">Inverted Row (Under a Table)</div><div class="ex-meta">2 sets · Max reps</div></div><span class="ex-chevron">▾</span></div>
-    <div class="ex-body" id="t6">
-      <div class="how-to"><div class="how-to-title">How To Do It</div><ol><li>Lie under a sturdy table. Grip the edge with both hands, shoulder-width apart, palms facing you.</li><li>Straighten your body — heels on the floor, body in a straight line like a reverse plank.</li><li>Pull your chest up to the table edge by bending your elbows.</li><li>Lower back down with control. Make it harder by elevating your feet on a chair.</li></ol></div>
-      <div class="band-tip"><div class="band-tip-title">🎽 Band Option</div>No direct band swap here — the inverted row is best done as written. However, if you want extra resistance, loop a band around your waist and anchor it to something behind you to add pulling resistance.</div>
-      <div class="log-section-title">Log This Exercise</div>
-      <div class="set-row"><span class="set-lbl">Set 1</span><input id="t6r1" placeholder="Reps"/><input id="t6w1" placeholder="Bodyweight"/></div>
-      <div class="set-row"><span class="set-lbl">Set 2</span><input id="t6r2" placeholder="Reps"/><input id="t6w2" placeholder="Bodyweight"/></div>
-      <button class="log-ex-btn" onclick="logEx('tue','Inverted Row',['t6r1','t6w1','t6r2','t6w2'])">Save Log ✓</button>
-    </div></div>
-</div>
-
-<!-- WEDNESDAY -->
-<div class="workout-view" id="view-wed">
-  <button class="back-btn" onclick="closeDay()">◀ Back</button>
-  <div class="day-header">Wednesday — Legs + Glutes</div>
-
-  <div class="ex-card"><div class="ex-header" onclick="togEx('w1')"><div><div class="ex-name">Dumbbell Goblet Squat</div><div class="ex-meta">4 sets · 10–12 reps</div></div><span class="ex-chevron">▾</span></div>
-    <div class="ex-body" id="w1">
-      <div class="how-to"><div class="how-to-title">How To Do It</div><ol><li>Hold one dumbbell vertically with both hands at your chest, cupped like a goblet.</li><li>Stand with feet slightly wider than hip-width, toes turned out slightly.</li><li>Push your hips back and bend your knees, lowering until thighs are parallel to the floor.</li><li>Drive through your heels to stand back up. Keep your chest tall throughout.</li></ol></div>
-      <div class="band-tip"><div class="band-tip-title">🎽 Band Option</div>Place a loop band just above your knees. As you squat, push your knees outward against the band — this fires up the glutes even more and keeps your knees from caving inward. Use with or without the dumbbell.</div>
-      <div class="log-section-title">Log This Exercise</div>
-      <div class="set-row"><span class="set-lbl">Set 1</span><input id="w1r1" placeholder="Reps"/><input id="w1w1" placeholder="Weight / Band"/></div>
-      <div class="set-row"><span class="set-lbl">Set 2</span><input id="w1r2" placeholder="Reps"/><input id="w1w2" placeholder="Weight / Band"/></div>
-      <div class="set-row"><span class="set-lbl">Set 3</span><input id="w1r3" placeholder="Reps"/><input id="w1w3" placeholder="Weight / Band"/></div>
-      <div class="set-row"><span class="set-lbl">Set 4</span><input id="w1r4" placeholder="Reps"/><input id="w1w4" placeholder="Weight / Band"/></div>
-      <button class="log-ex-btn" onclick="logEx('wed','Goblet Squat',['w1r1','w1w1','w1r2','w1w2','w1r3','w1w3','w1r4','w1w4'])">Save Log ✓</button>
-    </div></div>
-
-  <div class="ex-card"><div class="ex-header" onclick="togEx('w2')"><div><div class="ex-name">Dumbbell Romanian Deadlift</div><div class="ex-meta">4 sets · 10–12 reps</div></div><span class="ex-chevron">▾</span></div>
-    <div class="ex-body" id="w2">
-      <div class="how-to"><div class="how-to-title">How To Do It</div><ol><li>Stand feet hip-width apart, dumbbells in front of your thighs, palms facing your legs.</li><li>Push your hips back (not down) and lower the dumbbells along your legs, feeling the hamstring stretch.</li><li>Keep your back flat and dumbbells close to your body the whole time.</li><li>Drive your hips forward to stand. Stop lowering when your back wants to round.</li></ol></div>
-      <div class="band-tip"><div class="band-tip-title">🎽 Band Option</div>Stand on the band, hold both ends, and hinge exactly as described. The band increases resistance as you stand up — which is when your hamstrings and glutes are finishing the movement. Great combination with dumbbells too.</div>
-      <div class="log-section-title">Log This Exercise</div>
-      <div class="set-row"><span class="set-lbl">Set 1</span><input id="w2r1" placeholder="Reps"/><input id="w2w1" placeholder="Weight / Band"/></div>
-      <div class="set-row"><span class="set-lbl">Set 2</span><input id="w2r2" placeholder="Reps"/><input id="w2w2" placeholder="Weight / Band"/></div>
-      <div class="set-row"><span class="set-lbl">Set 3</span><input id="w2r3" placeholder="Reps"/><input id="w2w3" placeholder="Weight / Band"/></div>
-      <div class="set-row"><span class="set-lbl">Set 4</span><input id="w2r4" placeholder="Reps"/><input id="w2w4" placeholder="Weight / Band"/></div>
-      <button class="log-ex-btn" onclick="logEx('wed','Romanian Deadlift',['w2r1','w2w1','w2r2','w2w2','w2r3','w2w3','w2r4','w2w4'])">Save Log ✓</button>
-    </div></div>
-
-  <div class="ex-card"><div class="ex-header" onclick="togEx('w3')"><div><div class="ex-name">Dumbbell Reverse Lunge</div><div class="ex-meta">3 sets · 10 reps each leg</div></div><span class="ex-chevron">▾</span></div>
-    <div class="ex-body" id="w3">
-      <div class="how-to"><div class="how-to-title">How To Do It</div><ol><li>Stand tall, a dumbbell in each hand at your sides.</li><li>Step one foot backward, lowering your back knee toward the floor.</li><li>Front thigh parallel to the floor, front knee directly over your ankle.</li><li>Push off your front foot to return to standing. Complete all reps, then switch legs.</li></ol></div>
-      <div class="band-tip"><div class="band-tip-title">🎽 Band Option</div>Stand on the band with your front foot and hold both ends at your sides. As you lunge back, the band creates resistance on the drive back up — hits the quads and glutes harder on the working leg.</div>
-      <div class="log-section-title">Log This Exercise</div>
-      <div class="set-row"><span class="set-lbl">Set 1</span><input id="w3r1" placeholder="Reps"/><input id="w3w1" placeholder="Weight / Band"/></div>
-      <div class="set-row"><span class="set-lbl">Set 2</span><input id="w3r2" placeholder="Reps"/><input id="w3w2" placeholder="Weight / Band"/></div>
-      <div class="set-row"><span class="set-lbl">Set 3</span><input id="w3r3" placeholder="Reps"/><input id="w3w3" placeholder="Weight / Band"/></div>
-      <button class="log-ex-btn" onclick="logEx('wed','Reverse Lunge',['w3r1','w3w1','w3r2','w3w2','w3r3','w3w3'])">Save Log ✓</button>
-    </div></div>
-
-  <div class="ex-card"><div class="ex-header" onclick="togEx('w4')"><div><div class="ex-name">Dumbbell Sumo Squat</div><div class="ex-meta">3 sets · 12–15 reps</div></div><span class="ex-chevron">▾</span></div>
-    <div class="ex-body" id="w4">
-      <div class="how-to"><div class="how-to-title">How To Do It</div><ol><li>Stand with feet wider than shoulder-width, toes at 45 degrees. Hold one dumbbell with both hands between your legs.</li><li>Squat down, keeping your knees tracking over your toes and chest tall.</li><li>Feel the inner thigh stretch at the bottom — pause briefly.</li><li>Drive through your heels to return to standing.</li></ol></div>
-      <div class="band-tip"><div class="band-tip-title">🎽 Band Option</div>Place a loop band just above your knees and push outward against it throughout the squat. This adds inner thigh and glute activation on top of the movement — no need to skip the dumbbell.</div>
-      <div class="log-section-title">Log This Exercise</div>
-      <div class="set-row"><span class="set-lbl">Set 1</span><input id="w4r1" placeholder="Reps"/><input id="w4w1" placeholder="Weight / Band"/></div>
-      <div class="set-row"><span class="set-lbl">Set 2</span><input id="w4r2" placeholder="Reps"/><input id="w4w2" placeholder="Weight / Band"/></div>
-      <div class="set-row"><span class="set-lbl">Set 3</span><input id="w4r3" placeholder="Reps"/><input id="w4w3" placeholder="Weight / Band"/></div>
-      <button class="log-ex-btn" onclick="logEx('wed','Sumo Squat',['w4r1','w4w1','w4r2','w4w2','w4r3','w4w3'])">Save Log ✓</button>
-    </div></div>
-
-  <div class="ex-card"><div class="ex-header" onclick="togEx('w5')"><div><div class="ex-name">Glute Bridge</div><div class="ex-meta">3 sets · 15 reps</div></div><span class="ex-chevron">▾</span></div>
-    <div class="ex-body" id="w5">
-      <div class="how-to"><div class="how-to-title">How To Do It</div><ol><li>Lie on your back, knees bent, feet flat on the floor hip-width apart. Optional: rest a dumbbell across your hips.</li><li>Drive your heels into the floor and squeeze your glutes as you lift your hips toward the ceiling.</li><li>At the top, your body forms a straight line from shoulders to knees — hold 1–2 seconds.</li><li>Lower your hips back down with control. All glutes — don't let your lower back take over.</li></ol></div>
-      <div class="band-tip"><div class="band-tip-title">🎽 Band Option</div>Place a loop band just above your knees and push your knees outward against it as you bridge up. This activates the glute medius (outer glute) in addition to the main glute — one of the best band additions in the whole program.</div>
-      <div class="log-section-title">Log This Exercise</div>
-      <div class="set-row"><span class="set-lbl">Set 1</span><input id="w5r1" placeholder="Reps"/><input id="w5w1" placeholder="Weight / Band"/></div>
-      <div class="set-row"><span class="set-lbl">Set 2</span><input id="w5r2" placeholder="Reps"/><input id="w5w2" placeholder="Weight / Band"/></div>
-      <div class="set-row"><span class="set-lbl">Set 3</span><input id="w5r3" placeholder="Reps"/><input id="w5w3" placeholder="Weight / Band"/></div>
-      <button class="log-ex-btn" onclick="logEx('wed','Glute Bridge',['w5r1','w5w1','w5r2','w5w2','w5r3','w5w3'])">Save Log ✓</button>
-    </div></div>
-
-  <div class="ex-card"><div class="ex-header" onclick="togEx('w6')"><div><div class="ex-name">Calf Raise (with Dumbbells)</div><div class="ex-meta">3 sets · 15–20 reps</div></div><span class="ex-chevron">▾</span></div>
-    <div class="ex-body" id="w6">
-      <div class="how-to"><div class="how-to-title">How To Do It</div><ol><li>Stand with a dumbbell in each hand, feet hip-width apart.</li><li>Rise up onto the balls of your feet as high as you can, squeezing your calves at the top.</li><li>Lower back down slowly — aim for a 2-second descent.</li><li>For more range, stand with the balls of your feet on a step edge.</li></ol></div>
-      <div class="band-tip"><div class="band-tip-title">🎽 Band Option</div>Stand on the band and hold both ends at your sides as extra resistance alongside or instead of dumbbells. The band adds a nice constant tension through the whole calf raise movement.</div>
-      <div class="log-section-title">Log This Exercise</div>
-      <div class="set-row"><span class="set-lbl">Set 1</span><input id="w6r1" placeholder="Reps"/><input id="w6w1" placeholder="Weight / Band"/></div>
-      <div class="set-row"><span class="set-lbl">Set 2</span><input id="w6r2" placeholder="Reps"/><input id="w6w2" placeholder="Weight / Band"/></div>
-      <div class="set-row"><span class="set-lbl">Set 3</span><input id="w6r3" placeholder="Reps"/><input id="w6w3" placeholder="Weight / Band"/></div>
-      <button class="log-ex-btn" onclick="logEx('wed','Calf Raise',['w6r1','w6w1','w6r2','w6w2','w6r3','w6w3'])">Save Log ✓</button>
-    </div></div>
-</div>
-
-<!-- THURSDAY -->
-<div class="workout-view" id="view-thu">
-  <button class="back-btn" onclick="closeDay()">◀ Back</button>
-  <div class="day-header">Thursday — Core + Conditioning</div>
-
-  <div class="ex-card"><div class="ex-header" onclick="togEx('th1')"><div><div class="ex-name">Dumbbell Woodchop</div><div class="ex-meta">3 sets · 12 reps each side</div></div><span class="ex-chevron">▾</span></div>
-    <div class="ex-body" id="th1">
-      <div class="how-to"><div class="how-to-title">How To Do It</div><ol><li>Stand feet shoulder-width apart, holding one dumbbell with both hands above one shoulder.</li><li>In one controlled diagonal motion, swing the dumbbell down and across toward the opposite hip — like chopping wood.</li><li>Rotate through your torso, not just your arms. Slowly reverse back up.</li><li>Complete all reps on one side, then switch.</li></ol></div>
-      <div class="band-tip"><div class="band-tip-title">🎽 Band Option</div>Anchor the band low (under a door or furniture) to one side of you. Hold both ends and perform the same diagonal chop upward across your body. This reverses the resistance angle and hits the core from a different direction — do both directions for complete oblique work.</div>
-      <div class="log-section-title">Log This Exercise</div>
-      <div class="set-row"><span class="set-lbl">Set 1</span><input id="th1r1" placeholder="Reps"/><input id="th1w1" placeholder="Weight / Band"/></div>
-      <div class="set-row"><span class="set-lbl">Set 2</span><input id="th1r2" placeholder="Reps"/><input id="th1w2" placeholder="Weight / Band"/></div>
-      <div class="set-row"><span class="set-lbl">Set 3</span><input id="th1r3" placeholder="Reps"/><input id="th1w3" placeholder="Weight / Band"/></div>
-      <button class="log-ex-btn" onclick="logEx('thu','Woodchop',['th1r1','th1w1','th1r2','th1w2','th1r3','th1w3'])">Save Log ✓</button>
-    </div></div>
-
-  <div class="ex-card"><div class="ex-header" onclick="togEx('th2')"><div><div class="ex-name">Weighted Crunch</div><div class="ex-meta">3 sets · 15–20 reps</div></div><span class="ex-chevron">▾</span></div>
-    <div class="ex-body" id="th2">
-      <div class="how-to"><div class="how-to-title">How To Do It</div><ol><li>Lie on your back, knees bent, feet flat. Hold one dumbbell on your chest with both hands.</li><li>Curl your shoulders off the floor toward your knees — short movement, about 30 degrees.</li><li>Squeeze your abs at the top before lowering slowly. No yanking on your neck.</li></ol></div>
-      <div class="band-tip"><div class="band-tip-title">🎽 Band Option</div>Anchor the band behind your head (under a heavy piece of furniture), hold both ends at your chest, and crunch forward against the band resistance. Keeps constant tension on the abs throughout.</div>
-      <div class="log-section-title">Log This Exercise</div>
-      <div class="set-row"><span class="set-lbl">Set 1</span><input id="th2r1" placeholder="Reps"/><input id="th2w1" placeholder="Weight / Band"/></div>
-      <div class="set-row"><span class="set-lbl">Set 2</span><input id="th2r2" placeholder="Reps"/><input id="th2w2" placeholder="Weight / Band"/></div>
-      <div class="set-row"><span class="set-lbl">Set 3</span><input id="th2r3" placeholder="Reps"/><input id="th2w3" placeholder="Weight / Band"/></div>
-      <button class="log-ex-btn" onclick="logEx('thu','Weighted Crunch',['th2r1','th2w1','th2r2','th2w2','th2r3','th2w3'])">Save Log ✓</button>
-    </div></div>
-
-  <div class="ex-card"><div class="ex-header" onclick="togEx('th3')"><div><div class="ex-name">Plank</div><div class="ex-meta">3 sets · 30–45 seconds</div></div><span class="ex-chevron">▾</span></div>
-    <div class="ex-body" id="th3">
-      <div class="how-to"><div class="how-to-title">How To Do It</div><ol><li>Get into a push-up position but rest on your forearms instead of hands.</li><li>Keep your body in a perfectly straight line — hips neither sagging nor sticking up.</li><li>Squeeze everything: abs, glutes, quads. Breathe steadily.</li><li>If your hips drop, the set is over — rest rather than hold bad form.</li></ol></div>
-      <div class="band-tip"><div class="band-tip-title">🎽 Band Option</div>Loop a band around your wrists and hold the plank position while slowly moving one arm forward at a time (plank with alternating reaches). The band adds instability and forces your core to work harder to stay stable.</div>
-      <div class="log-section-title">Log This Exercise</div>
-      <div class="set-row"><span class="set-lbl">Set 1</span><input id="th3r1" placeholder="Seconds"/><input id="th3w1" placeholder="BW / Band"/></div>
-      <div class="set-row"><span class="set-lbl">Set 2</span><input id="th3r2" placeholder="Seconds"/><input id="th3w2" placeholder="BW / Band"/></div>
-      <div class="set-row"><span class="set-lbl">Set 3</span><input id="th3r3" placeholder="Seconds"/><input id="th3w3" placeholder="BW / Band"/></div>
-      <button class="log-ex-btn" onclick="logEx('thu','Plank',['th3r1','th3w1','th3r2','th3w2','th3r3','th3w3'])">Save Log ✓</button>
-    </div></div>
-
-  <div class="ex-card"><div class="ex-header" onclick="togEx('th4')"><div><div class="ex-name">Dumbbell Russian Twist</div><div class="ex-meta">3 sets · 20 reps total</div></div><span class="ex-chevron">▾</span></div>
-    <div class="ex-body" id="th4">
-      <div class="how-to"><div class="how-to-title">How To Do It</div><ol><li>Sit on the floor, knees bent, feet flat or slightly lifted. Hold one dumbbell with both hands at your chest.</li><li>Lean back so your torso is at about 45 degrees.</li><li>Rotate right, bringing the dumbbell beside your right hip. Then rotate left. That's two reps.</li><li>Keep your core engaged — don't just swing your arms.</li></ol></div>
-      <div class="band-tip"><div class="band-tip-title">🎽 Band Option</div>Anchor the band to one side at a low point, hold it with both hands, and perform the twist rotating away from the anchor. This adds rotational resistance through the obliques. Switch anchor side each set.</div>
-      <div class="log-section-title">Log This Exercise</div>
-      <div class="set-row"><span class="set-lbl">Set 1</span><input id="th4r1" placeholder="Reps"/><input id="th4w1" placeholder="Weight / Band"/></div>
-      <div class="set-row"><span class="set-lbl">Set 2</span><input id="th4r2" placeholder="Reps"/><input id="th4w2" placeholder="Weight / Band"/></div>
-      <div class="set-row"><span class="set-lbl">Set 3</span><input id="th4r3" placeholder="Reps"/><input id="th4w3" placeholder="Weight / Band"/></div>
-      <button class="log-ex-btn" onclick="logEx('thu','Russian Twist',['th4r1','th4w1','th4r2','th4w2','th4r3','th4w3'])">Save Log ✓</button>
-    </div></div>
-
-  <div class="ex-card"><div class="ex-header" onclick="togEx('th5')"><div><div class="ex-name">Dead Bug</div><div class="ex-meta">3 sets · 10 reps each side</div></div><span class="ex-chevron">▾</span></div>
-    <div class="ex-body" id="th5">
-      <div class="how-to"><div class="how-to-title">How To Do It</div><ol><li>Lie on your back. Extend both arms toward the ceiling. Lift both legs so knees are above hips, shins parallel to the floor.</li><li>Slowly lower your right arm overhead while simultaneously straightening your left leg toward the floor.</li><li>Keep your lower back pressed firmly against the floor the entire time — non-negotiable.</li><li>Return to start, then repeat on the opposite side. That's one rep each side.</li></ol></div>
-      <div class="band-tip"><div class="band-tip-title">🎽 Band Option</div>Loop a band around both feet. As you extend one leg out, the band adds resistance against the extending leg. This makes the core work harder to keep your lower back flat — only add this once the standard version feels solid.</div>
-      <div class="log-section-title">Log This Exercise</div>
-      <div class="set-row"><span class="set-lbl">Set 1</span><input id="th5r1" placeholder="Reps"/><input id="th5w1" placeholder="BW / Band"/></div>
-      <div class="set-row"><span class="set-lbl">Set 2</span><input id="th5r2" placeholder="Reps"/><input id="th5w2" placeholder="BW / Band"/></div>
-      <div class="set-row"><span class="set-lbl">Set 3</span><input id="th5r3" placeholder="Reps"/><input id="th5w3" placeholder="BW / Band"/></div>
-      <button class="log-ex-btn" onclick="logEx('thu','Dead Bug',['th5r1','th5w1','th5r2','th5w2','th5r3','th5w3'])">Save Log ✓</button>
-    </div></div>
-
-  <div class="ex-card"><div class="ex-header" onclick="togEx('th6')"><div><div class="ex-name">Burpees</div><div class="ex-meta">3 sets · 10–12 reps</div></div><span class="ex-chevron">▾</span></div>
-    <div class="ex-body" id="th6">
-      <div class="how-to"><div class="how-to-title">How To Do It</div><ol><li>Start standing. Drop your hands to the floor and jump both feet back into a push-up position.</li><li>Do one push-up.</li><li>Jump your feet back toward your hands.</li><li>Explode upward into a jump, arms overhead. Land softly and go right into the next rep.</li></ol></div>
-      <div class="band-tip"><div class="band-tip-title">🎽 Band Option</div>Loop a band around your ankles for the burpee. It adds resistance when you jump your feet back and forward, and fires up the hip flexors and glutes during the movement. Keep the band light so it doesn't trip you up.</div>
-      <div class="log-section-title">Log This Exercise</div>
-      <div class="set-row"><span class="set-lbl">Set 1</span><input id="th6r1" placeholder="Reps"/><input id="th6w1" placeholder="BW / Band"/></div>
-      <div class="set-row"><span class="set-lbl">Set 2</span><input id="th6r2" placeholder="Reps"/><input id="th6w2" placeholder="BW / Band"/></div>
-      <div class="set-row"><span class="set-lbl">Set 3</span><input id="th6r3" placeholder="Reps"/><input id="th6w3" placeholder="BW / Band"/></div>
-      <button class="log-ex-btn" onclick="logEx('thu','Burpees',['th6r1','th6w1','th6r2','th6w2','th6r3','th6w3'])">Save Log ✓</button>
-    </div></div>
-</div>
-
-<!-- FRIDAY -->
-<div class="workout-view" id="view-fri">
-  <button class="back-btn" onclick="closeDay()">◀ Back</button>
-  <div class="day-header">Friday — Full Body Power</div>
-
-  <div class="ex-card"><div class="ex-header" onclick="togEx('f1')"><div><div class="ex-name">Dumbbell Thruster</div><div class="ex-meta">4 sets · 8–10 reps</div></div><span class="ex-chevron">▾</span></div>
-    <div class="ex-body" id="f1">
-      <div class="how-to"><div class="how-to-title">How To Do It</div><ol><li>Stand feet shoulder-width apart, a dumbbell in each hand at shoulder height, palms facing in.</li><li>Squat down until your thighs are parallel to the floor.</li><li>As you drive up out of the squat, press both dumbbells overhead in one fluid motion.</li><li>Lower the dumbbells back to shoulders as you descend into the next squat. Squat + press = one rep.</li></ol></div>
-      <div class="band-tip"><div class="band-tip-title">🎽 Band Option</div>Stand on the band and hold both ends at shoulder height. Perform the exact same squat-to-press. The band adds extra challenge at the top of the press — combine with light dumbbells for maximum overload.</div>
-      <div class="log-section-title">Log This Exercise</div>
-      <div class="set-row"><span class="set-lbl">Set 1</span><input id="f1r1" placeholder="Reps"/><input id="f1w1" placeholder="Weight / Band"/></div>
-      <div class="set-row"><span class="set-lbl">Set 2</span><input id="f1r2" placeholder="Reps"/><input id="f1w2" placeholder="Weight / Band"/></div>
-      <div class="set-row"><span class="set-lbl">Set 3</span><input id="f1r3" placeholder="Reps"/><input id="f1w3" placeholder="Weight / Band"/></div>
-      <div class="set-row"><span class="set-lbl">Set 4</span><input id="f1r4" placeholder="Reps"/><input id="f1w4" placeholder="Weight / Band"/></div>
-      <button class="log-ex-btn" onclick="logEx('fri','Thruster',['f1r1','f1w1','f1r2','f1w2','f1r3','f1w3','f1r4','f1w4'])">Save Log ✓</button>
-    </div></div>
-
-  <div class="ex-card"><div class="ex-header" onclick="togEx('f2')"><div><div class="ex-name">Push-Up to Renegade Row</div><div class="ex-meta">4 sets · 6–8 reps each side</div></div><span class="ex-chevron">▾</span></div>
-    <div class="ex-body" id="f2">
-      <div class="how-to"><div class="how-to-title">How To Do It</div><ol><li>Start in a push-up position with a dumbbell in each hand on the floor.</li><li>Do one push-up.</li><li>At the top, shift your weight to your left hand and row the right dumbbell up to your hip.</li><li>Lower it, then row the left side. That's one full rep. Keep your hips square to the floor.</li></ol></div>
-      <div class="band-tip"><div class="band-tip-title">🎽 Band Option</div>Drape a band across your upper back and hold one end under each palm during the push-up portion for added chest resistance. The row is best done with dumbbells — bands are hard to row from the floor without rolling.</div>
-      <div class="log-section-title">Log This Exercise</div>
-      <div class="set-row"><span class="set-lbl">Set 1</span><input id="f2r1" placeholder="Reps"/><input id="f2w1" placeholder="Weight / Band"/></div>
-      <div class="set-row"><span class="set-lbl">Set 2</span><input id="f2r2" placeholder="Reps"/><input id="f2w2" placeholder="Weight / Band"/></div>
-      <div class="set-row"><span class="set-lbl">Set 3</span><input id="f2r3" placeholder="Reps"/><input id="f2w3" placeholder="Weight / Band"/></div>
-      <div class="set-row"><span class="set-lbl">Set 4</span><input id="f2r4" placeholder="Reps"/><input id="f2w4" placeholder="Weight / Band"/></div>
-      <button class="log-ex-btn" onclick="logEx('fri','Renegade Row',['f2r1','f2w1','f2r2','f2w2','f2r3','f2w3','f2r4','f2w4'])">Save Log ✓</button>
-    </div></div>
-
-  <div class="ex-card"><div class="ex-header" onclick="togEx('f3')"><div><div class="ex-name">Dumbbell Split Squat</div><div class="ex-meta">3 sets · 10 reps each leg</div></div><span class="ex-chevron">▾</span></div>
-    <div class="ex-body" id="f3">
-      <div class="how-to"><div class="how-to-title">How To Do It</div><ol><li>Stand in a staggered stance — one foot forward, one back about 2–3 feet. Dumbbell in each hand.</li><li>Lower your back knee toward the floor by bending both knees.</li><li>Front shin stays vertical — knee over ankle, not shooting past your toes.</li><li>Drive through your front heel to return to start. Complete all reps, then switch legs.</li></ol></div>
-      <div class="band-tip"><div class="band-tip-title">🎽 Band Option</div>Stand on the band with your front foot and hold both ends at your sides. The band adds resistance on the drive up from the lunge — excellent for glute and quad overload on the front leg.</div>
-      <div class="log-section-title">Log This Exercise</div>
-      <div class="set-row"><span class="set-lbl">Set 1</span><input id="f3r1" placeholder="Reps"/><input id="f3w1" placeholder="Weight / Band"/></div>
-      <div class="set-row"><span class="set-lbl">Set 2</span><input id="f3r2" placeholder="Reps"/><input id="f3w2" placeholder="Weight / Band"/></div>
-      <div class="set-row"><span class="set-lbl">Set 3</span><input id="f3r3" placeholder="Reps"/><input id="f3w3" placeholder="Weight / Band"/></div>
-      <button class="log-ex-btn" onclick="logEx('fri','Split Squat',['f3r1','f3w1','f3r2','f3w2','f3r3','f3w3'])">Save Log ✓</button>
-    </div></div>
-
-  <div class="ex-card"><div class="ex-header" onclick="togEx('f4')"><div><div class="ex-name">Dumbbell Deadlift</div><div class="ex-meta">3 sets · 10–12 reps</div></div><span class="ex-chevron">▾</span></div>
-    <div class="ex-body" id="f4">
-      <div class="how-to"><div class="how-to-title">How To Do It</div><ol><li>Stand feet hip-width apart, dumbbells in front of your thighs.</li><li>Push your hips back and bend your knees slightly, lowering the dumbbells toward the floor with a flat back.</li><li>Keep the dumbbells close to your legs throughout.</li><li>Drive your hips forward to stand. Squeeze your glutes at the top.</li></ol></div>
-      <div class="band-tip"><div class="band-tip-title">🎽 Band Option</div>Stand on the band and hold both ends the same way you'd hold the dumbbells. Perform the exact same hinge. You can also combine — hold dumbbells AND stand on the band for serious resistance.</div>
-      <div class="log-section-title">Log This Exercise</div>
-      <div class="set-row"><span class="set-lbl">Set 1</span><input id="f4r1" placeholder="Reps"/><input id="f4w1" placeholder="Weight / Band"/></div>
-      <div class="set-row"><span class="set-lbl">Set 2</span><input id="f4r2" placeholder="Reps"/><input id="f4w2" placeholder="Weight / Band"/></div>
-      <div class="set-row"><span class="set-lbl">Set 3</span><input id="f4r3" placeholder="Reps"/><input id="f4w3" placeholder="Weight / Band"/></div>
-      <button class="log-ex-btn" onclick="logEx('fri','Dumbbell Deadlift',['f4r1','f4w1','f4r2','f4w2','f4r3','f4w3'])">Save Log ✓</button>
-    </div></div>
-
-  <div class="ex-card"><div class="ex-header" onclick="togEx('f5')"><div><div class="ex-name">Arnold Press</div><div class="ex-meta">3 sets · 10–12 reps</div></div><span class="ex-chevron">▾</span></div>
-    <div class="ex-body" id="f5">
-      <div class="how-to"><div class="how-to-title">How To Do It</div><ol><li>Sit or stand with a dumbbell in each hand at shoulder height, palms facing YOU (toward your face).</li><li>As you press overhead, rotate your wrists so that by the time arms are extended, palms face forward.</li><li>Reverse the rotation as you lower — palms end up facing you again at the bottom.</li><li>This rotation hits all three heads of the shoulder muscle.</li></ol></div>
-      <div class="band-tip"><div class="band-tip-title">🎽 Band Option</div>Sit on the middle of the band, hold one end in each hand, and perform the same rotation as you press overhead. The band resistance combined with the wrist rotation makes this a great shoulder burner.</div>
-      <div class="log-section-title">Log This Exercise</div>
-      <div class="set-row"><span class="set-lbl">Set 1</span><input id="f5r1" placeholder="Reps"/><input id="f5w1" placeholder="Weight / Band"/></div>
-      <div class="set-row"><span class="set-lbl">Set 2</span><input id="f5r2" placeholder="Reps"/><input id="f5w2" placeholder="Weight / Band"/></div>
-      <div class="set-row"><span class="set-lbl">Set 3</span><input id="f5r3" placeholder="Reps"/><input id="f5w3" placeholder="Weight / Band"/></div>
-      <button class="log-ex-btn" onclick="logEx('fri','Arnold Press',['f5r1','f5w1','f5r2','f5w2','f5r3','f5w3'])">Save Log ✓</button>
-    </div></div>
-
-  <div class="ex-card"><div class="ex-header" onclick="togEx('f6')"><div><div class="ex-name">Hollow Body Hold</div><div class="ex-meta">3 sets · 20–30 seconds</div></div><span class="ex-chevron">▾</span></div>
-    <div class="ex-body" id="f6">
-      <div class="how-to"><div class="how-to-title">How To Do It</div><ol><li>Lie on your back, arms extended overhead, legs straight out.</li><li>Press your lower back firmly into the floor — zero gap.</li><li>Simultaneously lift your arms, shoulders, and legs a few inches off the floor.</li><li>Hold. If your lower back lifts off, bend your knees. Breathe steadily. This is harder than it looks.</li></ol></div>
-      <div class="band-tip"><div class="band-tip-title">🎽 Band Option</div>Loop the band around your feet and hold the other end with both hands overhead while in the hollow body position. The band pulls your feet toward the floor, forcing your core to work harder to maintain the position. Advanced — master the standard version first.</div>
-      <div class="log-section-title">Log This Exercise</div>
-      <div class="set-row"><span class="set-lbl">Set 1</span><input id="f6r1" placeholder="Seconds"/><input id="f6w1" placeholder="BW / Band"/></div>
-      <div class="set-row"><span class="set-lbl">Set 2</span><input id="f6r2" placeholder="Seconds"/><input id="f6w2" placeholder="BW / Band"/></div>
-      <div class="set-row"><span class="set-lbl">Set 3</span><input id="f6r3" placeholder="Seconds"/><input id="f6w3" placeholder="BW / Band"/></div>
-      <button class="log-ex-btn" onclick="logEx('fri','Hollow Body Hold',['f6r1','f6w1','f6r2','f6w2','f6r3','f6w3'])">Save Log ✓</button>
-    </div></div>
 </div>
 
 <script>
 function today(){var n=new Date();var y=n.getFullYear(),mo=n.getMonth()+1,d=n.getDate();return y+'-'+(mo<10?'0'+mo:mo)+'-'+(d<10?'0'+d:d);}
 function localDow(){return new Date().getDay();}
+function isoFriendly(iso){return new Date(iso+'T12:00:00').toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});}
 
-var schedule={1:{day:'Monday',theme:'Push Day 💪',stack:['🏋️ Chest · Shoulders · Triceps']},2:{day:'Tuesday',theme:'Pull Day 🔵',stack:['💪 Back · Biceps']},3:{day:'Wednesday',theme:'Leg Day 🦵',stack:['🦵 Legs + Glutes']},4:{day:'Thursday',theme:'Core Day 🔥',stack:['🔥 Core + Conditioning']},5:{day:'Friday',theme:'Full Body Power ⚡',stack:['⚡ Full Body Power']},6:{day:'Saturday',theme:'Rest Day 😴',stack:[]},0:{day:'Sunday',theme:'Rest Day 😴',stack:[]}};
+// SCHEDULE
+var schedule={
+  1:{day:'Monday',theme:'Push Day 💪',stack:['🏋️ Chest · Shoulders · Triceps']},
+  2:{day:'Tuesday',theme:'Pull Day 🔵',stack:['💪 Back · Biceps']},
+  3:{day:'Wednesday',theme:'Leg Day 🦵',stack:['🦵 Legs + Glutes']},
+  4:{day:'Thursday',theme:'Core Day 🔥',stack:['🔥 Core + Conditioning']},
+  5:{day:'Friday',theme:'Full Body Power ⚡',stack:['⚡ Full Body Power']},
+  6:{day:'Saturday',theme:'Rest Day 😴',stack:[]},
+  0:{day:'Sunday',theme:'Rest Day 😴',stack:[]}
+};
 var dow=localDow(),tod=schedule[dow],banner=document.getElementById('todayBanner');
 var bh='<div class="today-label">Today</div><div class="today-day">'+tod.day+'</div><div class="today-theme">'+tod.theme+'</div>';
 if(tod.stack.length){bh+='<div class="today-stack">';tod.stack.forEach(function(i){bh+='<div class="today-item">✅ <span>'+i+'</span></div>';});bh+='</div>';}
 else bh+='<div class="rest-day">🛁 Recover. Eat your protein. Come back stronger.</div>';
 banner.innerHTML=bh;
 
-// Today badge on day card
-var todayCardMap={1:'card-mon',2:'card-tue',3:'card-wed',4:'card-thu',5:'card-fri'};
-if(todayCardMap[dow]){var tc=document.getElementById(todayCardMap[dow]);if(tc){var b=document.createElement('div');b.className='dc-badge today';b.textContent='TODAY';tc.appendChild(b);}}
+// Today badge on workout card
+if(dow>=1&&dow<=5) {
+  var c=document.getElementById('card-workout');
+  if(c){var b=document.createElement('div');b.className='card-badge today-badge';b.textContent='TODAY';c.appendChild(b);}
+}
 
 // STORAGE
-function getLogs(){try{return JSON.parse(localStorage.getItem('jeon_exlogs')||'[]');}catch(e){try{return JSON.parse(sessionStorage.getItem('jeon_exlogs')||'[]');}catch(e2){return [];}}}
-function setLogs(l){try{localStorage.setItem('jeon_exlogs',JSON.stringify(l));}catch(e){try{sessionStorage.setItem('jeon_exlogs',JSON.stringify(l));}catch(e2){}}}
+function getW(){try{return JSON.parse(localStorage.getItem('jeon_workouts')||'{}');}catch(e){try{return JSON.parse(sessionStorage.getItem('jeon_workouts')||'{}');}catch(e2){return {};}}}
+function setW(w){try{localStorage.setItem('jeon_workouts',JSON.stringify(w));}catch(e){try{sessionStorage.setItem('jeon_workouts',JSON.stringify(w));}catch(e2){}}}
+function safeGet(k){try{return localStorage.getItem(k);}catch(e){try{return sessionStorage.getItem(k);}catch(e2){return null;}}}
 
-// PHASE
-var phaseDesc={1:'Weeks 1–4 · Learn the movements. Moderate weight.',2:'Weeks 5–8 · Increase weight and reps each week. Push to near failure on last set.',3:'Weeks 9–12 · Heavier loads, slow reps (3 sec down). Add a drop set on 1 exercise per day.'};
-function setPhase(p){
-  [1,2,3].forEach(function(n){document.getElementById('pbtn'+n).classList.toggle('active',n===p);});
-  document.getElementById('phasePill').textContent='Phase '+p;
-  document.getElementById('phaseDesc').textContent=phaseDesc[p];
-  try{localStorage.setItem('jeon_phase',p);}catch(e){try{sessionStorage.setItem('jeon_phase',p);}catch(e2){}}
-}
-var sp=null;try{sp=localStorage.getItem('jeon_phase');}catch(e){}
-if(sp) setPhase(parseInt(sp)); else setPhase(1);
-
-// DAY NAVIGATION
-var currentDay=null;
-function openDay(day){
-  currentDay=day;
-  document.getElementById('homeView').style.display='none';
-  document.querySelectorAll('.workout-view').forEach(function(v){v.classList.remove('active');});
-  document.getElementById('view-'+day).classList.add('active');
-  window.scrollTo(0,0);
-}
-function closeDay(){
-  currentDay=null;
-  document.getElementById('homeView').style.display='block';
-  document.querySelectorAll('.workout-view').forEach(function(v){v.classList.remove('active');});
-  renderHistory();
-  window.scrollTo(0,0);
+// STATS
+function calcStats(){
+  var w=getW();
+  var dates=Object.keys(w).filter(function(d){return w[d]&&w[d].length;}).sort(function(a,b){return b.localeCompare(a);});
+  document.getElementById('totalVal').textContent=dates.length;
+  var now=new Date(),mo=now.getMonth(),yr=now.getFullYear();
+  document.getElementById('monthVal').textContent=dates.filter(function(d){var dt=new Date(d+'T12:00:00');return dt.getMonth()===mo&&dt.getFullYear()===yr;}).length;
+  var streak=0;
+  for(var i=0;i<365;i++){var n=new Date();n.setDate(n.getDate()-i);var y=n.getFullYear(),m=n.getMonth()+1,dd=n.getDate();var ds=y+'-'+(m<10?'0'+m:m)+'-'+(dd<10?'0'+dd:dd);if(w[ds]&&w[ds].length){streak++;}else if(i===0){}else break;}
+  document.getElementById('streakVal').textContent=streak;
 }
 
-// EXERCISE LOG
-function logEx(day,name,ids){
-  var numSets=ids.length/2,sets=[];
-  for(var i=0;i<numSets;i++){
-    var r=document.getElementById(ids[i*2]).value||'—';
-    var wt=document.getElementById(ids[i*2+1]).value||'BW';
-    sets.push('Set '+(i+1)+': '+r+' @ '+wt);
+// CALENDAR
+var calYear=new Date().getFullYear(),calMonth=new Date().getMonth();
+var dotMap={push:'dot-push',pull:'dot-pull',legs:'dot-legs',core:'dot-core',full:'dot-full',tracker:'dot-tracker'};
+var nameMap={push:'Push Day',pull:'Pull Day',legs:'Legs + Glutes',core:'Core + Conditioning',full:'Full Body Power',tracker:'Tracker'};
+function renderCal(){
+  var w=getW(),todayISO=today();
+  var months=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  document.getElementById('calTitle').textContent=months[calMonth]+' '+calYear;
+  var firstDay=new Date(calYear,calMonth,1).getDay(),dim=new Date(calYear,calMonth+1,0).getDate();
+  var html='';
+  for(var i=0;i<firstDay;i++) html+='<div class="cal-day empty"></div>';
+  for(var d=1;d<=dim;d++){
+    var iso=calYear+'-'+String(calMonth+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');
+    var isFuture=iso>todayISO,apps=w[iso]||[],isToday=iso===todayISO,worked=apps.length>0;
+    var dots=apps.map(function(a){return '<div class="dot '+(dotMap[a]||'')+'"></div>';}).join('');
+    var cls=['cal-day',isToday?'today':'',worked?'worked':'',isFuture?'future':''].filter(Boolean).join(' ');
+    html+='<div class="'+cls+'" onclick="'+(isFuture?'':'openCalDay(\''+iso+'\')')+'">'+d+(worked?'<div class="dot-row">'+dots+'</div>':'')+'</div>';
   }
-  var d=new Date(),dateStr=d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();
-  var logs=getLogs();
-  logs.push({date:dateStr,day:day,exercise:name,sets:sets});
-  setLogs(logs);
-  showToast('✓ '+name+' logged!');
+  document.getElementById('calGrid').innerHTML=html;
 }
+function changeMonth(dir){calMonth+=dir;if(calMonth>11){calMonth=0;calYear++;}if(calMonth<0){calMonth=11;calYear--;}renderCal();}
+function openCalDay(iso){var w=getW();if(w[iso]&&w[iso].length){openDayModal(iso);}else{openModal(iso);}}
 
-// HISTORY
-function renderHistory(){
-  var logs=getLogs();
-  var el=document.getElementById('historyList');
-  if(!logs.length){el.innerHTML='<div class="empty-msg">No exercises logged yet.</div>';return;}
-  var groups={};
-  logs.forEach(function(l){
-    var k=l.date+'||'+l.day;
-    if(!groups[k]) groups[k]={date:l.date,day:l.day,entries:[]};
-    groups[k].entries.push('<b>'+l.exercise+'</b><br>'+l.sets.join(' · '));
+// DAY DETAIL MODAL
+var dayModalDate='';
+function openDayModal(iso){
+  var w=getW(),apps=w[iso]||[];
+  dayModalDate=iso;
+  document.getElementById('dayModalTitle').textContent='📅 '+isoFriendly(iso);
+  var html='';
+  apps.forEach(function(a){
+    html+='<div class="day-app-row"><div class="day-app-name">'+(nameMap[a]||a)+'</div><button class="remove-btn" onclick="removeAppFromDay(\''+a+'\')">Remove</button></div>';
   });
-  var keys=Object.keys(groups).sort(function(a,b){return b.localeCompare(a);});
-  el.innerHTML=keys.map(function(k){
-    var g=groups[k],dayLabel={mon:'Monday — Push',tue:'Tuesday — Pull',wed:'Wednesday — Legs',thu:'Thursday — Core',fri:'Friday — Full Body'}[g.day]||g.day;
-    var safeKey=k.replace(/'/g,"\\'");
-    return '<div class="history-entry"><button class="h-del" onclick="deleteHistEntry(\''+safeKey+'\')">✕ Delete</button><div class="h-date">'+g.date+'</div><div class="h-day">'+dayLabel+'</div><div class="h-ex">'+g.entries.join('<br><br>')+'</div></div>';
-  }).join('');
+  if(!html) html='<div style="text-align:center;color:#6b7280;font-size:13px;padding:16px 0">Nothing logged for this day.</div>';
+  document.getElementById('dayModalContent').innerHTML=html;
+  document.getElementById('dayModalBg').classList.add('open');
 }
-function deleteHistEntry(key){
-  var parts=key.split('||'),date=parts[0],day=parts[1];
-  var logs=getLogs().filter(function(l){return !(l.date===date&&l.day===day);});
-  setLogs(logs);renderHistory();showToast('Entry deleted 🗑');
+function closeDayModal(){document.getElementById('dayModalBg').classList.remove('open');}
+function editDayWorkout(){closeDayModal();openModal(dayModalDate);}
+function removeAppFromDay(app){
+  var w=getW(),iso=dayModalDate;
+  if(w[iso]){w[iso]=w[iso].filter(function(a){return a!==app;});if(!w[iso].length)delete w[iso];}
+  setW(w);renderCal();calcStats();
+  if(w[iso]&&w[iso].length){openDayModal(iso);}else{closeDayModal();}
 }
 
-function togEx(id){var el=document.getElementById(id);el.style.display=el.style.display==='block'?'none':'block';}
+// LOG MODAL
+var checked=new Set(),modalDate='';
+function openModal(iso){
+  iso=iso||today();modalDate=iso;
+  var w=getW(),existing=w[iso]||[];
+  checked=new Set(existing);
+  var isPast=iso<today(),hasExisting=existing.length>0;
+  ['push','pull','legs','core','full','tracker'].forEach(function(a){document.getElementById('chk-'+a).classList.toggle('checked',checked.has(a));});
+  if(isPast){document.getElementById('modalTitle').textContent='📅 Log Past Workout';document.getElementById('modalDateLabel').textContent=isoFriendly(iso);document.getElementById('modalDateLabel').style.display='block';}
+  else{document.getElementById('modalTitle').textContent=hasExisting?'✏️ Edit Today\'s Log':'✅ Log Today\'s Workout';document.getElementById('modalDateLabel').style.display='none';}
+  document.getElementById('modalSubLabel').textContent=hasExisting?'Tap to add or remove':'Tap everything you completed';
+  document.getElementById('modalDeleteBtn').style.display=hasExisting?'block':'none';
+  document.getElementById('modalBg').classList.add('open');
+}
+function closeModal(){document.getElementById('modalBg').classList.remove('open');}
+function toggleCheck(a){var el=document.getElementById('chk-'+a);if(checked.has(a)){checked.delete(a);el.classList.remove('checked');}else{checked.add(a);el.classList.add('checked');}}
+function saveWorkout(){
+  var w=getW(),iso=modalDate;
+  if(checked.size){w[iso]=Array.from(checked);}else{delete w[iso];}
+  setW(w);closeModal();renderCal();calcStats();
+  showToast(checked.size?'Workout saved! 💪':'Log cleared');
+}
+function deleteWorkout(){var w=getW(),iso=modalDate;delete w[iso];setW(w);closeModal();renderCal();calcStats();showToast('Workout log deleted 🗑');}
+document.getElementById('modalBg').addEventListener('click',function(e){if(e.target===document.getElementById('modalBg'))closeModal();});
+document.getElementById('dayModalBg').addEventListener('click',function(e){if(e.target===document.getElementById('dayModalBg'))closeDayModal();});
 
-// Auto-open today's day
-var autoDay={1:'mon',2:'tue',3:'wed',4:'thu',5:'fri'};
-if(autoDay[dow]) openDay(autoDay[dow]);
-else renderHistory();
+// SNAPSHOT from Tracker
+var tk=today();
+try{var p=JSON.parse(safeGet('jeon_protein_'+tk));if(p){var tot=(p.meals||[]).reduce(function(s,m){return s+m.p;},0);document.getElementById('snapProtein').textContent=tot+'g';var pct=Math.min(100,Math.round(tot/(p.goal||160)*100));document.getElementById('snapBar').style.width=pct+'%';document.getElementById('snapNote').textContent=pct+'% of protein goal';}}catch(e){}
+try{var r=JSON.parse(safeGet('jeon_recovery_'+tk));if(r){document.getElementById('snapSleep').textContent=r.sleep?r.sleep+'h':'—';var fm={great:'🔥',good:'💪',sore:'😬',rest:'🛌'};document.getElementById('snapFeel').textContent=fm[r.feel]||'—';}}catch(e){}
+
+// PHASE — reads from workout app's saved phase
+var phaseDesc={1:'Weeks 1–4 · Learn the movements. Moderate weight.',2:'Weeks 5–8 · Increase weight and reps. Push near failure.',3:'Weeks 9–12 · Heavier loads, slow reps. Add drop sets.'};
+var sp=null;try{sp=localStorage.getItem('jeon_phase');}catch(e){}
+if(sp){document.getElementById('phasePill').textContent='Phase '+sp;document.getElementById('phaseDesc').textContent=phaseDesc[parseInt(sp)]||'';}
 
 // TIPS
 var tips=[
-  '<strong>🥩 Protein:</strong> Aim for 0.8–1g per pound of bodyweight daily. Hit protein within <strong>30 min post-workout</strong>. Prioritize it in your first meal.',
-  '<strong>💪 Form First:</strong> Slow every rep down. Add a <strong>2-second hold</strong> at peak contraction. If you don\'t feel the target muscle, drop weight 20% and focus.',
-  '<strong>😴 Recovery:</strong> Muscle is built at <strong>rest</strong>, not during the workout. Aim for 7–9 hours sleep. Magnesium glycinate at night helps.',
-  '<strong>📈 Progressive Overload:</strong> Each week, add <strong>1–2 reps or bump weight</strong> on at least one exercise. Log your numbers so you always know what to beat.',
-  '<strong>🔥 Getting Cut:</strong> The workouts build the muscle. The cut comes from a <strong>modest calorie deficit + high protein</strong>. A 15–20 min walk after training burns fat without losing muscle.',
-  '<strong>🎽 Resistance Bands:</strong> Bands keep <strong>constant tension</strong> on the muscle throughout the whole movement — even at the start and end where dumbbells go slack. Use them alongside dumbbells for extra overload, or alone on lighter days. Every exercise in this program has a band option — tap to expand and look for the purple box.'
+  '<strong>🥩 Protein:</strong> Aim for 0.8–1g per pound of bodyweight daily. Hit protein within <strong>30 min post-workout</strong>.',
+  '<strong>💪 Form First:</strong> Slow every rep down. Add a <strong>2-second hold</strong> at peak contraction. If you don\'t feel the target muscle, drop weight and focus.',
+  '<strong>😴 Recovery:</strong> Muscle is built at <strong>rest</strong>, not during the workout. Aim for 7–9 hours. Magnesium glycinate at night helps.',
+  '<strong>📈 Progressive Overload:</strong> Each week, add <strong>1–2 reps or bump the weight</strong> on at least one exercise. Log your numbers so you always know what to beat.',
+  '<strong>🔥 Getting Cut:</strong> The workouts build the muscle. The cut comes from a <strong>modest calorie deficit + high protein</strong>. A 15–20 min walk after training helps burn fat without losing muscle.'
 ];
 function showTip(i){document.getElementById('tipDetail').innerHTML=tips[i];document.querySelectorAll('.tip-chip').forEach(function(c,j){c.classList.toggle('active',j===i);});}
 showTip(0);
 
-function showToast(msg){var t=document.createElement('div');t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#7c3aed;color:#fff;padding:10px 22px;border-radius:20px;font-size:14px;font-weight:700;z-index:99;';t.textContent=msg;document.body.appendChild(t);setTimeout(function(){t.remove();},2200);}
+function showToast(msg){var t=document.createElement('div');t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#7c3aed,#db2777);color:#fff;padding:10px 22px;border-radius:20px;font-size:14px;font-weight:700;z-index:99;';t.textContent=msg;document.body.appendChild(t);setTimeout(function(){t.remove();},2200);}
+
+renderCal();calcStats();
 </script>
 </body>
 </html>
