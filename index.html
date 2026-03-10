@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Jéon's Fitness Suite</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0a0010;font-family:system-ui,sans-serif;min-height:100vh;padding:20px 16px 40px}
+.header{text-align:center;padding:24px 0 18px}
+.header h1{font-size:26px;font-weight:900;color:white}
+.header p{font-size:13px;color:#9ca3af;margin-top:4px}
+.today-banner{background:linear-gradient(135deg,#7c3aed,#db2777);border-radius:16px;padding:18px 20px;margin-bottom:24px;color:white}
+.today-label{font-size:11px;font-weight:700;letter-spacing:1.5px;opacity:.85;text-transform:uppercase}
+.today-day{font-size:24px;font-weight:900;margin:4px 0 2px}
+.today-theme{font-size:14px;opacity:.9}
+.today-stack{margin-top:12px;display:flex;flex-direction:column;gap:6px}
+.today-item{background:rgba(255,255,255,.15);border-radius:8px;padding:8px 12px;font-size:13px;display:flex;align-items:center;gap:8px}
+.today-item span{font-weight:600}
+.rest-day{text-align:center;font-size:16px;padding:10px 0 4px;opacity:.85}
+.streak-row{display:flex;gap:10px;margin-bottom:24px}
+.streak-card{flex:1;background:#1a0030;border-radius:14px;padding:14px;text-align:center}
+.streak-val{font-size:2rem;font-weight:900;color:#f0abfc}
+.streak-lbl{font-size:11px;color:#9ca3af;margin-top:2px;text-transform:uppercase;letter-spacing:1px}
+.streak-card.fire .streak-val{color:#fb923c}
+.cal-box{background:#1a0030;border-radius:16px;padding:16px 20px;margin-bottom:16px}
+.cal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.cal-title{color:white;font-size:15px;font-weight:800}
+.cal-nav{background:#7c3aed33;border:1px solid #7c3aed66;color:#c084fc;border-radius:8px;padding:4px 10px;font-size:13px;cursor:pointer}
+.cal-days-header{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:6px}
+.cal-days-header span{text-align:center;font-size:10px;color:#6b7280;font-weight:700}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.cal-day{aspect-ratio:1;border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#6b7280;background:#0d0d1a;cursor:pointer;transition:opacity .15s}
+.cal-day:active{opacity:.7}
+.cal-day:hover{border:1px solid #7c3aed55;color:#c084fc}
+.cal-day.today{border:1.5px solid #7c3aed;color:white}
+.cal-day.empty{background:transparent;cursor:default;pointer-events:none}
+.cal-day.empty:hover{border:none}
+.cal-day.future{opacity:.3;cursor:default;pointer-events:none}
+.cal-day.worked{color:white}
+.cal-day .dot-row{display:flex;gap:2px;margin-top:2px;flex-wrap:wrap;justify-content:center}
+.dot{width:5px;height:5px;border-radius:50%}
+.dot-push{background:#f97316}
+.dot-pull{background:#38bdf8}
+.dot-legs{background:#10b981}
+.dot-core{background:#a855f7}
+.dot-full{background:#ef4444}
+.dot-tracker{background:#f0abfc}
+.legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.leg-item{display:flex;align-items:center;gap:4px;font-size:11px;color:#9ca3af}
+.leg-dot{width:8px;height:8px;border-radius:50%}
+.log-workout-btn{width:100%;background:linear-gradient(135deg,#7c3aed,#db2777);border:none;border-radius:12px;color:white;font-size:14px;font-weight:800;padding:14px;cursor:pointer;margin-bottom:24px;letter-spacing:.5px}
+.snapshot-box{background:#1a0030;border-radius:16px;padding:16px 20px;margin-bottom:24px}
+.snapshot-box h3{color:white;font-size:13px;font-weight:800;margin-bottom:12px;letter-spacing:1px;text-transform:uppercase}
+.snap-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px}
+.snap-item{background:#0d0d1a;border-radius:10px;padding:8px;text-align:center}
+.snap-val{font-size:1.2rem;font-weight:900;color:#c084fc}
+.snap-lbl{font-size:10px;color:#6b7280;margin-top:2px}
+.snap-bar-wrap{background:#0d0d1a;border-radius:20px;height:6px;overflow:hidden}
+.snap-bar{height:100%;border-radius:20px;background:linear-gradient(90deg,#7c3aed,#db2777);transition:width .4s}
+.snap-note{font-size:10px;color:#6b7280;text-align:right;margin-top:4px}
+.phase-box{background:#1a0030;border-radius:16px;padding:16px 20px;margin-bottom:24px;border:1px solid #7c3aed33}
+.phase-box h3{color:#c084fc;font-size:13px;font-weight:800;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
+.phase-pill{display:inline-block;background:linear-gradient(135deg,#7c3aed,#db2777);border-radius:20px;padding:5px 16px;font-size:13px;font-weight:800;color:white;margin-bottom:6px}
+.phase-desc{font-size:12px;color:#9ca3af}
+.section-label{font-size:11px;font-weight:700;color:#6b7280;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:12px}
+.tips-row{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;margin-bottom:10px;scrollbar-width:none}
+.tips-row::-webkit-scrollbar{display:none}
+.tip-chip{flex-shrink:0;background:#1a0030;border:1px solid #7c3aed55;border-radius:20px;padding:7px 13px;font-size:12px;color:#d8b4fe;white-space:nowrap;cursor:pointer}
+.tip-chip.active{background:linear-gradient(135deg,#7c3aed,#db2777);border-color:transparent;color:white;font-weight:700}
+.tip-detail{background:#1a0030;border-radius:12px;padding:12px 14px;margin-bottom:24px;font-size:13px;color:#d8b4fe;line-height:1.6}
+.tip-detail strong{color:#f0abfc}
+.cards{display:flex;flex-direction:column;gap:14px;margin-bottom:28px}
+a.card{display:block;text-decoration:none;border-radius:16px;padding:18px 20px;color:white;position:relative;overflow:hidden;transition:transform .15s,opacity .15s}
+a.card:active{transform:scale(.97);opacity:.9}
+.card-workout{background:linear-gradient(135deg,#6d28d9,#db2777)}
+.card-tracker{background:linear-gradient(135deg,#065f46,#10b981)}
+.card-icon{font-size:28px;margin-bottom:6px}
+.card-title{font-size:18px;font-weight:800}
+.card-sub{font-size:12px;opacity:.85;margin-top:2px}
+.card-badge{position:absolute;top:14px;right:14px;background:rgba(255,255,255,.25);border-radius:20px;padding:4px 10px;font-size:11px;font-weight:700}
+.card-badge.today-badge{background:white;color:#7c3aed}
+/* LOG MODAL */
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:50;align-items:flex-end;justify-content:center}
+.modal-bg.open{display:flex}
+.modal{background:#1a0030;border-radius:20px 20px 0 0;padding:24px 20px 36px;width:100%;max-width:480px}
+.modal h3{color:white;font-size:17px;font-weight:800;margin-bottom:16px}
+.modal-label{font-size:12px;color:#d8b4fe;margin-bottom:8px;display:block}
+.app-check-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:18px}
+.app-check{background:#0d0d1a;border:1.5px solid #7c3aed44;border-radius:10px;padding:10px;display:flex;align-items:center;gap:8px;cursor:pointer;transition:all .2s}
+.app-check.checked{border-color:#c084fc;background:#7c3aed22}
+.ac-icon{font-size:1.2rem}
+.ac-name{font-size:12px;color:#d8b4fe;font-weight:600}
+.modal-btns{display:flex;gap:10px}
+.modal-save{flex:1;background:linear-gradient(135deg,#7c3aed,#db2777);border:none;border-radius:10px;color:white;font-size:14px;font-weight:700;padding:12px;cursor:pointer}
+.modal-cancel{background:#0d0d1a;border:1px solid #7c3aed44;border-radius:10px;color:#9ca3af;font-size:14px;padding:12px 18px;cursor:pointer}
+.modal-delete{background:#1a0010;border:1px solid #ef4444;border-radius:10px;color:#ef4444;font-size:14px;font-weight:700;padding:12px 18px;cursor:pointer}
+.day-app-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #7c3aed22}
+.day-app-row:last-child{border-bottom:none}
+.day-app-name{font-size:13px;color:#d8b4fe;display:flex;align-items:center;gap:8px}
+.remove-btn{background:#1a0010;border:1px solid #ef444455;color:#ef4444;border-radius:6px;font-size:11px;font-weight:700;padding:4px 10px;cursor:pointer}
+.past-date-label{font-size:12px;color:#9ca3af;margin-bottom:14px;text-align:center;font-style:italic}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>💪 Jéon's Fitness Suite</h1>
+  <p>Your muscle-building toolkit</p>
+</div>
+
+<div class="today-banner" id="todayBanner"></div>
+
+<div class="streak-row">
+  <div class="streak-card fire"><div class="streak-val" id="streakVal">0</div><div class="streak-lbl">🔥 Streak</div></div>
+  <div class="streak-card"><div class="streak-val" id="totalVal">0</div><div class="streak-lbl">💪 Total</div></div>
+  <div class="streak-card"><div class="streak-val" id="monthVal">0</div><div class="streak-lbl">📅 Month</div></div>
+</div>
+
+<div class="cal-box">
+  <div class="cal-header">
+    <button class="cal-nav" onclick="changeMonth(-1)">◀</button>
+    <div class="cal-title" id="calTitle"></div>
+    <button class="cal-nav" onclick="changeMonth(1)">▶</button>
+  </div>
+  <div class="cal-days-header"><span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span></div>
+  <div class="cal-grid" id="calGrid"></div>
+  <div class="legend">
+    <div class="leg-item"><div class="leg-dot dot-push"></div>Push</div>
+    <div class="leg-item"><div class="leg-dot dot-pull"></div>Pull</div>
+    <div class="leg-item"><div class="leg-dot dot-legs"></div>Legs</div>
+    <div class="leg-item"><div class="leg-dot dot-core"></div>Core</div>
+    <div class="leg-item"><div class="leg-dot dot-full"></div>Full Body</div>
+    <div class="leg-item"><div class="leg-dot dot-tracker"></div>Tracker</div>
+  </div>
+</div>
+
+<button class="log-workout-btn" onclick="openModal(today())">✅ Log Today's Workout</button>
+
+<div class="snapshot-box">
+  <h3>📊 Today's Snapshot</h3>
+  <div class="snap-grid">
+    <div class="snap-item"><div class="snap-val" id="snapProtein">—</div><div class="snap-lbl">Protein (g)</div></div>
+    <div class="snap-item"><div class="snap-val" id="snapSleep">—</div><div class="snap-lbl">Sleep (hrs)</div></div>
+    <div class="snap-item"><div class="snap-val" id="snapFeel">—</div><div class="snap-lbl">Body Feel</div></div>
+  </div>
+  <div class="snap-bar-wrap"><div class="snap-bar" id="snapBar" style="width:0%"></div></div>
+  <div class="snap-note" id="snapNote">Log in Tracker to fill this in</div>
+</div>
+
+<div class="phase-box">
+  <h3>📈 Current Phase</h3>
+  <div class="phase-pill" id="phasePill">Phase 1</div>
+  <div class="phase-desc" id="phaseDesc">Weeks 1–4 · Learn the movements. Moderate weight.</div>
+</div>
+
+<p class="section-label">💡 Quick Tips</p>
+<div class="tips-row">
+  <div class="tip-chip active" onclick="showTip(0)">🥩 Protein</div>
+  <div class="tip-chip" onclick="showTip(1)">💪 Form</div>
+  <div class="tip-chip" onclick="showTip(2)">😴 Recovery</div>
+  <div class="tip-chip" onclick="showTip(3)">📈 Overload</div>
+  <div class="tip-chip" onclick="showTip(4)">🔥 Getting Cut</div>
+</div>
+<div class="tip-detail" id="tipDetail"></div>
+
+<p class="section-label">Your Apps</p>
+<div class="cards">
+  <a href="YOUR_WORKOUT_APP_URL" class="card card-workout" target="_blank" id="card-workout">
+    <div class="card-icon">🏋️</div>
+    <div class="card-title">Muscle Builder</div>
+    <div class="card-sub">5-Day Program · Push · Pull · Legs · Core · Full Body</div>
+  </a>
+  <a href="YOUR_TRACKER_URL" class="card card-tracker" target="_blank">
+    <div class="card-icon">📊</div>
+    <div class="card-title">Fitness Tracker</div>
+    <div class="card-sub">Protein · Overload · Recovery · Weight Log</div>
+  </a>
+</div>
+
+<!-- LOG MODAL -->
+<div class="modal-bg" id="modalBg">
+  <div class="modal">
+    <h3 id="modalTitle">✅ Log Today's Workout</h3>
+    <div id="modalDateLabel" class="past-date-label" style="display:none"></div>
+    <span class="modal-label" id="modalSubLabel">Tap everything you completed</span>
+    <div class="app-check-grid">
+      <div class="app-check" id="chk-push" onclick="toggleCheck('push')"><span class="ac-icon">🏋️</span><span class="ac-name">Push Day</span></div>
+      <div class="app-check" id="chk-pull" onclick="toggleCheck('pull')"><span class="ac-icon">💪</span><span class="ac-name">Pull Day</span></div>
+      <div class="app-check" id="chk-legs" onclick="toggleCheck('legs')"><span class="ac-icon">🦵</span><span class="ac-name">Legs + Glutes</span></div>
+      <div class="app-check" id="chk-core" onclick="toggleCheck('core')"><span class="ac-icon">🔥</span><span class="ac-name">Core + Conditioning</span></div>
+      <div class="app-check" id="chk-full" onclick="toggleCheck('full')"><span class="ac-icon">⚡</span><span class="ac-name">Full Body Power</span></div>
+      <div class="app-check" id="chk-tracker" onclick="toggleCheck('tracker')"><span class="ac-icon">📊</span><span class="ac-name">Tracker</span></div>
+    </div>
+    <div class="modal-btns">
+      <button class="modal-cancel" onclick="closeModal()">Cancel</button>
+      <button class="modal-delete" id="modalDeleteBtn" onclick="deleteWorkout()" style="display:none">🗑 Delete</button>
+      <button class="modal-save" onclick="saveWorkout()">Save 💪</button>
+    </div>
+  </div>
+</div>
+
+<!-- DAY DETAIL MODAL -->
+<div class="modal-bg" id="dayModalBg">
+  <div class="modal">
+    <h3 id="dayModalTitle">📅 Day Log</h3>
+    <div id="dayModalContent"></div>
+    <div class="modal-btns" style="margin-top:16px">
+      <button class="modal-cancel" onclick="closeDayModal()">Close</button>
+      <button class="modal-save" onclick="editDayWorkout()">✏️ Edit</button>
+    </div>
+  </div>
+</div>
+
+<script>
+function today(){var n=new Date();var y=n.getFullYear(),mo=n.getMonth()+1,d=n.getDate();return y+'-'+(mo<10?'0'+mo:mo)+'-'+(d<10?'0'+d:d);}
+function localDow(){return new Date().getDay();}
+function isoFriendly(iso){return new Date(iso+'T12:00:00').toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});}
+
+// SCHEDULE
+var schedule={
+  1:{day:'Monday',theme:'Push Day 💪',stack:['🏋️ Chest · Shoulders · Triceps']},
+  2:{day:'Tuesday',theme:'Pull Day 🔵',stack:['💪 Back · Biceps']},
+  3:{day:'Wednesday',theme:'Leg Day 🦵',stack:['🦵 Legs + Glutes']},
+  4:{day:'Thursday',theme:'Core Day 🔥',stack:['🔥 Core + Conditioning']},
+  5:{day:'Friday',theme:'Full Body Power ⚡',stack:['⚡ Full Body Power']},
+  6:{day:'Saturday',theme:'Rest Day 😴',stack:[]},
+  0:{day:'Sunday',theme:'Rest Day 😴',stack:[]}
+};
+var dow=localDow(),tod=schedule[dow],banner=document.getElementById('todayBanner');
+var bh='<div class="today-label">Today</div><div class="today-day">'+tod.day+'</div><div class="today-theme">'+tod.theme+'</div>';
+if(tod.stack.length){bh+='<div class="today-stack">';tod.stack.forEach(function(i){bh+='<div class="today-item">✅ <span>'+i+'</span></div>';});bh+='</div>';}
+else bh+='<div class="rest-day">🛁 Recover. Eat your protein. Come back stronger.</div>';
+banner.innerHTML=bh;
+
+// Today badge on workout card
+if(dow>=1&&dow<=5) {
+  var c=document.getElementById('card-workout');
+  if(c){var b=document.createElement('div');b.className='card-badge today-badge';b.textContent='TODAY';c.appendChild(b);}
+}
+
+// STORAGE
+function getW(){try{return JSON.parse(localStorage.getItem('jeon_workouts')||'{}');}catch(e){try{return JSON.parse(sessionStorage.getItem('jeon_workouts')||'{}');}catch(e2){return {};}}}
+function setW(w){try{localStorage.setItem('jeon_workouts',JSON.stringify(w));}catch(e){try{sessionStorage.setItem('jeon_workouts',JSON.stringify(w));}catch(e2){}}}
+function safeGet(k){try{return localStorage.getItem(k);}catch(e){try{return sessionStorage.getItem(k);}catch(e2){return null;}}}
+
+// STATS
+function calcStats(){
+  var w=getW();
+  var dates=Object.keys(w).filter(function(d){return w[d]&&w[d].length;}).sort(function(a,b){return b.localeCompare(a);});
+  document.getElementById('totalVal').textContent=dates.length;
+  var now=new Date(),mo=now.getMonth(),yr=now.getFullYear();
+  document.getElementById('monthVal').textContent=dates.filter(function(d){var dt=new Date(d+'T12:00:00');return dt.getMonth()===mo&&dt.getFullYear()===yr;}).length;
+  var streak=0;
+  for(var i=0;i<365;i++){var n=new Date();n.setDate(n.getDate()-i);var y=n.getFullYear(),m=n.getMonth()+1,dd=n.getDate();var ds=y+'-'+(m<10?'0'+m:m)+'-'+(dd<10?'0'+dd:dd);if(w[ds]&&w[ds].length){streak++;}else if(i===0){}else break;}
+  document.getElementById('streakVal').textContent=streak;
+}
+
+// CALENDAR
+var calYear=new Date().getFullYear(),calMonth=new Date().getMonth();
+var dotMap={push:'dot-push',pull:'dot-pull',legs:'dot-legs',core:'dot-core',full:'dot-full',tracker:'dot-tracker'};
+var nameMap={push:'Push Day',pull:'Pull Day',legs:'Legs + Glutes',core:'Core + Conditioning',full:'Full Body Power',tracker:'Tracker'};
+function renderCal(){
+  var w=getW(),todayISO=today();
+  var months=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  document.getElementById('calTitle').textContent=months[calMonth]+' '+calYear;
+  var firstDay=new Date(calYear,calMonth,1).getDay(),dim=new Date(calYear,calMonth+1,0).getDate();
+  var html='';
+  for(var i=0;i<firstDay;i++) html+='<div class="cal-day empty"></div>';
+  for(var d=1;d<=dim;d++){
+    var iso=calYear+'-'+String(calMonth+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');
+    var isFuture=iso>todayISO,apps=w[iso]||[],isToday=iso===todayISO,worked=apps.length>0;
+    var dots=apps.map(function(a){return '<div class="dot '+(dotMap[a]||'')+'"></div>';}).join('');
+    var cls=['cal-day',isToday?'today':'',worked?'worked':'',isFuture?'future':''].filter(Boolean).join(' ');
+    html+='<div class="'+cls+'" onclick="'+(isFuture?'':'openCalDay(\''+iso+'\')')+'">'+d+(worked?'<div class="dot-row">'+dots+'</div>':'')+'</div>';
+  }
+  document.getElementById('calGrid').innerHTML=html;
+}
+function changeMonth(dir){calMonth+=dir;if(calMonth>11){calMonth=0;calYear++;}if(calMonth<0){calMonth=11;calYear--;}renderCal();}
+function openCalDay(iso){var w=getW();if(w[iso]&&w[iso].length){openDayModal(iso);}else{openModal(iso);}}
+
+// DAY DETAIL MODAL
+var dayModalDate='';
+function openDayModal(iso){
+  var w=getW(),apps=w[iso]||[];
+  dayModalDate=iso;
+  document.getElementById('dayModalTitle').textContent='📅 '+isoFriendly(iso);
+  var html='';
+  apps.forEach(function(a){
+    html+='<div class="day-app-row"><div class="day-app-name">'+(nameMap[a]||a)+'</div><button class="remove-btn" onclick="removeAppFromDay(\''+a+'\')">Remove</button></div>';
+  });
+  if(!html) html='<div style="text-align:center;color:#6b7280;font-size:13px;padding:16px 0">Nothing logged for this day.</div>';
+  document.getElementById('dayModalContent').innerHTML=html;
+  document.getElementById('dayModalBg').classList.add('open');
+}
+function closeDayModal(){document.getElementById('dayModalBg').classList.remove('open');}
+function editDayWorkout(){closeDayModal();openModal(dayModalDate);}
+function removeAppFromDay(app){
+  var w=getW(),iso=dayModalDate;
+  if(w[iso]){w[iso]=w[iso].filter(function(a){return a!==app;});if(!w[iso].length)delete w[iso];}
+  setW(w);renderCal();calcStats();
+  if(w[iso]&&w[iso].length){openDayModal(iso);}else{closeDayModal();}
+}
+
+// LOG MODAL
+var checked=new Set(),modalDate='';
+function openModal(iso){
+  iso=iso||today();modalDate=iso;
+  var w=getW(),existing=w[iso]||[];
+  checked=new Set(existing);
+  var isPast=iso<today(),hasExisting=existing.length>0;
+  ['push','pull','legs','core','full','tracker'].forEach(function(a){document.getElementById('chk-'+a).classList.toggle('checked',checked.has(a));});
+  if(isPast){document.getElementById('modalTitle').textContent='📅 Log Past Workout';document.getElementById('modalDateLabel').textContent=isoFriendly(iso);document.getElementById('modalDateLabel').style.display='block';}
+  else{document.getElementById('modalTitle').textContent=hasExisting?'✏️ Edit Today\'s Log':'✅ Log Today\'s Workout';document.getElementById('modalDateLabel').style.display='none';}
+  document.getElementById('modalSubLabel').textContent=hasExisting?'Tap to add or remove':'Tap everything you completed';
+  document.getElementById('modalDeleteBtn').style.display=hasExisting?'block':'none';
+  document.getElementById('modalBg').classList.add('open');
+}
+function closeModal(){document.getElementById('modalBg').classList.remove('open');}
+function toggleCheck(a){var el=document.getElementById('chk-'+a);if(checked.has(a)){checked.delete(a);el.classList.remove('checked');}else{checked.add(a);el.classList.add('checked');}}
+function saveWorkout(){
+  var w=getW(),iso=modalDate;
+  if(checked.size){w[iso]=Array.from(checked);}else{delete w[iso];}
+  setW(w);closeModal();renderCal();calcStats();
+  showToast(checked.size?'Workout saved! 💪':'Log cleared');
+}
+function deleteWorkout(){var w=getW(),iso=modalDate;delete w[iso];setW(w);closeModal();renderCal();calcStats();showToast('Workout log deleted 🗑');}
+document.getElementById('modalBg').addEventListener('click',function(e){if(e.target===document.getElementById('modalBg'))closeModal();});
+document.getElementById('dayModalBg').addEventListener('click',function(e){if(e.target===document.getElementById('dayModalBg'))closeDayModal();});
+
+// SNAPSHOT from Tracker
+var tk=today();
+try{var p=JSON.parse(safeGet('jeon_protein_'+tk));if(p){var tot=(p.meals||[]).reduce(function(s,m){return s+m.p;},0);document.getElementById('snapProtein').textContent=tot+'g';var pct=Math.min(100,Math.round(tot/(p.goal||160)*100));document.getElementById('snapBar').style.width=pct+'%';document.getElementById('snapNote').textContent=pct+'% of protein goal';}}catch(e){}
+try{var r=JSON.parse(safeGet('jeon_recovery_'+tk));if(r){document.getElementById('snapSleep').textContent=r.sleep?r.sleep+'h':'—';var fm={great:'🔥',good:'💪',sore:'😬',rest:'🛌'};document.getElementById('snapFeel').textContent=fm[r.feel]||'—';}}catch(e){}
+
+// PHASE — reads from workout app's saved phase
+var phaseDesc={1:'Weeks 1–4 · Learn the movements. Moderate weight.',2:'Weeks 5–8 · Increase weight and reps. Push near failure.',3:'Weeks 9–12 · Heavier loads, slow reps. Add drop sets.'};
+var sp=null;try{sp=localStorage.getItem('jeon_phase');}catch(e){}
+if(sp){document.getElementById('phasePill').textContent='Phase '+sp;document.getElementById('phaseDesc').textContent=phaseDesc[parseInt(sp)]||'';}
+
+// TIPS
+var tips=[
+  '<strong>🥩 Protein:</strong> Aim for 0.8–1g per pound of bodyweight daily. Hit protein within <strong>30 min post-workout</strong>.',
+  '<strong>💪 Form First:</strong> Slow every rep down. Add a <strong>2-second hold</strong> at peak contraction. If you don\'t feel the target muscle, drop weight and focus.',
+  '<strong>😴 Recovery:</strong> Muscle is built at <strong>rest</strong>, not during the workout. Aim for 7–9 hours. Magnesium glycinate at night helps.',
+  '<strong>📈 Progressive Overload:</strong> Each week, add <strong>1–2 reps or bump the weight</strong> on at least one exercise. Log your numbers so you always know what to beat.',
+  '<strong>🔥 Getting Cut:</strong> The workouts build the muscle. The cut comes from a <strong>modest calorie deficit + high protein</strong>. A 15–20 min walk after training helps burn fat without losing muscle.'
+];
+function showTip(i){document.getElementById('tipDetail').innerHTML=tips[i];document.querySelectorAll('.tip-chip').forEach(function(c,j){c.classList.toggle('active',j===i);});}
+showTip(0);
+
+function showToast(msg){var t=document.createElement('div');t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#7c3aed,#db2777);color:#fff;padding:10px 22px;border-radius:20px;font-size:14px;font-weight:700;z-index:99;';t.textContent=msg;document.body.appendChild(t);setTimeout(function(){t.remove();},2200);}
+
+renderCal();calcStats();
+</script>
+</body>
+</html>
